@@ -42,9 +42,9 @@ disqus:
 about: >
   # Portfolio Jekyll Theme
 
-  This is a personal portfolio theme that I built from the ground up, using the [DevTips Starter Kit](http://devtipsstarterkit.com/) as a foundation for starting, and following closely the amazing tutorial by [Travis Neilson over at DevTips](https://www.youtube.com/watch?v=T6jKLsxbFg4&list=PL0CB3OvPhDA_STygmp3sDenx3UpdOMk7P). You can [check out the demo](lenpaul.github.io/portfolio-jekyll-theme/), and [fork the repository](https://github.com/LeNPaul/portfolio-jekyll-theme/fork), to get started.
-
-contact: >
+  This is Nijanth Anand, an aspiring Data Analyst. Having worked in Business Intelligence and Business Operations for a while, I decided to pursue a Masters in Business Analytics at the Paul Merage School of Business, UC Irvine. I'm 
+  
+  contact: >
   # Contact
 
   You may contact me [through my email](mailto:l.nguyen.paul@gmail.com) or [tweet at me](https://twitter.com/intent/tweet?text=%40paululele) if you have any questions or would like to bring up any issues.
@@ -53,11 +53,11 @@ contact: >
 # Work Section
 
 projects:
-- {name: 'Project One', folder: 'proj-1', file: 'projects/proj-1.html'}
-- {name: 'Project Two', folder: 'proj-2', file: 'projects/proj-2.html'}
-- {name: 'Project Three', folder: 'proj-3', file: 'projects/proj-3.html'}
-- {name: 'Project Four', folder: 'proj-4', file: 'projects/proj-4.html'}
-- {name: 'Project Five', folder: 'proj-5', file: 'projects/proj-5.html'}
+- {name: 'Spotify Chartbuster prediction', folder: 'proj-1', file: 'projects/proj-1.html'}
+- {name: 'Impact of ', folder: 'proj-2', file: 'projects/proj-2.html'}
+- {name: 'Geo Fencing', folder: 'proj-3', file: 'projects/proj-3.html'}
+- {name: 'Apriori', folder: 'proj-4', file: 'projects/proj-4.html'}
+- {name: 'Twitter Sentiment Analsyis', folder: 'proj-5', file: 'projects/proj-5.html'}
 
 #-------------------------------
 # Contact Section

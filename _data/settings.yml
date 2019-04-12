@@ -32,7 +32,7 @@ google-analytics-ua: ''
 
 # Change to true for Disqus comments
 disqus:
-  comments: true
+  comments: false
   disqus_shortname: 'https-nijanthanand-github-io-analytics'
 
 #-------------------------------

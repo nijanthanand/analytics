@@ -13,7 +13,7 @@ menu:
 # NOTE: Providing SEO information will make this website more searchable on the internet.
 
 seo:
-  description: 'Personal portfolio powered by Jekyll and GitHub Pages '
+  description: 'Personal portfolio for Nijanth Anand to publish his work on Data and Analytics'
   rel-author: 'https://plus.google.com/u/0/#'
   rel-publisher: 'https://plus.google.com/u/0/#'
 
@@ -26,7 +26,7 @@ seo:
 # NOTE: If you want to use Google Analytics for basic web tracking: Just uncomment and enter your UA-Code here.
 
 # If you are not using Google Analytics, please change 'google-ID' to an empty string
-google-analytics-ua: 'UA-112060364-3'
+google-analytics-ua: ''
 
 #-------------------------------
 # Disqus Section
@@ -40,33 +40,31 @@ disqus:
 # About Section
 
 about: >
-  # Portfolio Jekyll Theme
+  # Nijanth Anand
 
   This is Nijanth Anand, an aspiring Data Analyst. Having worked in Business Intelligence and Business Operations for a while, I decided to pursue a Masters in Business Analytics at the Paul Merage School of Business, UC Irvine. I'm 
   
   contact: >
   # Contact
 
-  You may contact me [through my email](mailto:l.nguyen.paul@gmail.com) or [tweet at me](https://twitter.com/intent/tweet?text=%40paululele) if you have any questions or would like to bring up any issues.
-
+  You may contact me [through my email](mailto:nijantha@uci.edu) or [tweet at me](https://twitter.com/TheNijanthAnand) if you have any questions or would like to ask me about anything. 
 #-------------------------------
 # Work Section
 
 projects:
 - {name: 'Spotify Chartbuster prediction', folder: 'proj-1', file: 'projects/proj-1.html'}
-- {name: 'Impact of ', folder: 'proj-2', file: 'projects/proj-2.html'}
+- {name: 'Impact of Freemium Business Model', folder: 'proj-2', file: 'projects/proj-2.html'}
 - {name: 'Geo Fencing', folder: 'proj-3', file: 'projects/proj-3.html'}
-- {name: 'Apriori', folder: 'proj-4', file: 'projects/proj-4.html'}
+- {name: 'Apriori Alogirthms on Restaurant Cuisines', folder: 'proj-4', file: 'projects/proj-4.html'}
 - {name: 'Twitter Sentiment Analsyis', folder: 'proj-5', file: 'projects/proj-5.html'}
 
 #-------------------------------
 # Contact Section
 
 social:
-- {icon: 'twitter', link: '#'}
-- {icon: 'instagram', link: '#'}
-- {icon: 'github', link: '#'}
-- {icon: 'linkedin', link: '#'}
-- {icon: 'envelope', link: 'mailto:#'}
+- {icon: 'twitter', link: 'https://twitter.com/TheNijanthAnand'}
+- {icon: 'github', link: 'https://github.com/nijanthanand'}
+- {icon: 'linkedin', link: 'www.linkedin.com/in/nijanth-anand'}
+- {icon: 'envelope', link: 'mailto:nijantha@uci.edu'}
 
-# social network icons available: 'twitter' / 'facebook' / 'github' / 'pinterest' 'google-plus' / 'linkedin' / 'youtube' / 'instagram' / 'dribbble' / 'behance' / 'soundcloud' / 'vine'
+# social network icons available: 'twitter' /  'github' /  'linkedin' / 'youtube' / 'instagram' / 'dribbble' / 'behance' / 'soundcloud' / 'vine'

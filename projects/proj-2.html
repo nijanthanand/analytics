@@ -1,13 +1,65 @@
+
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8" />
+<head>
 
-<title>Propensity Score Matching - MidTerm</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+
+<title>Propensity Score Matching - MidTerm slides</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
+<!-- General and theme style sheets -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/css/reveal.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/css/theme/simple.css" id="theme">
 
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+}
+
+</script>
+
+<!--[if lt IE 9]>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/lib/js/html5shiv.js"></script>
+<![endif]-->
+
+<!-- Loading the mathjax macro -->
+<!-- Load mathjax -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
+    <!-- MathJax configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <!-- End of mathjax configuration -->
+
+<!-- Get Font-awesome from cdn -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
 
 <style type="text/css">
     /*!
@@ -13060,63 +13112,137 @@ ul.typeahead-list  > li > a.pull-right {
 
 <style type="text/css">
 /* Overrides of notebook CSS for static HTML export */
-body {
-  overflow: visible;
-  padding: 8px;
+.reveal {
+  font-size: 160%;
 }
-
-div#notebook {
-  overflow: visible;
-  border-top: none;
-}@media print {
-  div.cell {
-    display: block;
-    page-break-inside: avoid;
-  } 
-  div.output_wrapper { 
-    display: block;
-    page-break-inside: avoid; 
-  }
-  div.output { 
-    display: block;
-    page-break-inside: avoid; 
-  }
+.reveal pre {
+  width: inherit;
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace, sans-serif;
+  font-size: 80%;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+}
+.reveal pre code {
+  padding: 0px;
+}
+.reveal section img {
+  border: 0px solid black;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0);
+}
+.reveal i {
+  font-style: normal;
+  font-family: FontAwesome;
+  font-size: 2em;
+}
+.reveal .slides {
+  text-align: left;
+}
+.reveal.fade {
+  opacity: 1;
+}
+.reveal .progress {
+  position: static;
+}
+.reveal .controls .navigate-left,
+.reveal .controls .navigate-left.enabled {
+  border-right-color: #727272;
+}
+.reveal .controls .navigate-left.enabled:hover,
+.reveal .controls .navigate-left.enabled.enabled:hover {
+  border-right-color: #dfdfdf;
+}
+.reveal .controls .navigate-right,
+.reveal .controls .navigate-right.enabled {
+  border-left-color: #727272;
+}
+.reveal .controls .navigate-right.enabled:hover,
+.reveal .controls .navigate-right.enabled.enabled:hover {
+  border-left-color: #dfdfdf;
+}
+.reveal .controls .navigate-up,
+.reveal .controls .navigate-up.enabled {
+  border-bottom-color: #727272;
+}
+.reveal .controls .navigate-up.enabled:hover,
+.reveal .controls .navigate-up.enabled.enabled:hover {
+  border-bottom-color: #dfdfdf;
+}
+.reveal .controls .navigate-down,
+.reveal .controls .navigate-down.enabled {
+  border-top-color: #727272;
+}
+.reveal .controls .navigate-down.enabled:hover,
+.reveal .controls .navigate-down.enabled.enabled:hover {
+  border-top-color: #dfdfdf;
+}
+.reveal .progress span {
+  background: #727272;
+}
+div.input_area {
+  padding: 0.06em;
+}
+div.code_cell {
+  background-color: transparent;
+}
+div.prompt {
+  width: 11ex;
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace, sans-serif;
+  font-size: 80%;
+  text-align: right;
+}
+div.output_area pre {
+  font-family: monospace, sans-serif;
+  font-size: 80%;
+}
+div.output_prompt {
+  /* 5px right shift to account for margin in parent container */
+  margin: 5px 5px 0 0;
+}
+div.text_cell.rendered .rendered_html {
+  /* The H1 height seems miscalculated, we are just hidding the scrollbar */
+  overflow-y: hidden;
+}
+a.anchor-link {
+  /* There is still an anchor, we are only hidding it */
+  display: none;
+}
+.rendered_html p {
+  text-align: inherit;
+}
+::-webkit-scrollbar
+{
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar *
+{
+  background:transparent;
+}
+::-webkit-scrollbar-thumb
+{
+  background: #727272 !important;
 }
 </style>
 
 <!-- Custom stylesheet, it must be in the same directory as the html file -->
 <link rel="stylesheet" href="custom.css">
 
-<!-- Loading mathjax macro -->
-<!-- Load mathjax -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML"></script>
-    <!-- MathJax configuration -->
-    <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-            processEscapes: true,
-            processEnvironments: true
-        },
-        // Center justify equations in code and markdown cells. Elsewhere
-        // we use CSS to left justify single line equations in code cells.
-        displayAlign: 'center',
-        "HTML-CSS": {
-            styles: {'.MathJax_Display': {"margin": 0}},
-            linebreaks: { automatic: true }
-        }
-    });
-    </script>
-    <!-- End of mathjax configuration --></head>
-<body>
-  <div tabindex="-1" id="notebook" class="border-box-sizing">
-    <div class="container" id="notebook-container">
+</head>
 
+
+<body>
+
+
+<div class="reveal">
+<div class="slides">
+<section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="MidTerm---The-Freemium-business-model">MidTerm - The Freemium business model<a class="anchor-link" href="#MidTerm---The-Freemium-business-model">&#182;</a></h1>
+<h1 id="The-Freemium-business-model">The Freemium business model<a class="anchor-link" href="#The-Freemium-business-model">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -13141,15 +13267,15 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="kn">library</span><span class="p">(</span>dplyr<span class="p">)</span>             <span class="c1"># Package for Data preprocessing</span>
-<span class="kn">library</span><span class="p">(</span>psych<span class="p">)</span>             <span class="c1"># Package for summarising data in tables</span>
-<span class="kn">library</span><span class="p">(</span>ggplot2<span class="p">)</span>           <span class="c1"># Package for Visualisations</span>
-<span class="kn">library</span><span class="p">(</span>MatchIt<span class="p">)</span>           <span class="c1"># Package for Matching based on propensity score</span>
-<span class="kn">library</span><span class="p">(</span>corrplot<span class="p">)</span>          <span class="c1"># Package for Correlation plots</span>
-<span class="kn">library</span><span class="p">(</span>gridExtra<span class="p">)</span>         <span class="c1"># Package for plotting multiple plots</span>
-<span class="kn">library</span><span class="p">(</span>ggExtra<span class="p">)</span>           <span class="c1"># Package for Visual Enhancement</span>
-<span class="kn">library</span><span class="p">(</span>car<span class="p">)</span>               <span class="c1"># Package for VIF</span>
-<span class="kp">options</span><span class="p">(</span>scipen <span class="o">=</span> <span class="m">999</span><span class="p">)</span>      <span class="c1"># To ensure results are not in exponential</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>             <span class="c1"># Package for Data preprocessing</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">psych</span><span class="p">)</span>             <span class="c1"># Package for summarising data in tables</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>           <span class="c1"># Package for Visualisations</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">MatchIt</span><span class="p">)</span>           <span class="c1"># Package for Matching based on propensity score</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">corrplot</span><span class="p">)</span>          <span class="c1"># Package for Correlation plots</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">gridExtra</span><span class="p">)</span>         <span class="c1"># Package for plotting multiple plots</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">ggExtra</span><span class="p">)</span>           <span class="c1"># Package for Visual Enhancement</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">car</span><span class="p">)</span>               <span class="c1"># Package for VIF</span>
+<span class="nf">options</span><span class="p">(</span><span class="n">scipen</span> <span class="o">=</span> <span class="m">999</span><span class="p">)</span>      <span class="c1"># To ensure results are not in exponential</span>
 </pre></div>
 
     </div>
@@ -13199,12 +13325,12 @@ The following object is masked from &#39;package:dplyr&#39;:
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="kp">getwd</span><span class="p">()</span>
-<span class="kp">setwd</span><span class="p">(</span><span class="s">&#39;C:/Users/Nijanth Anand/Downloads/BANA277-Customer Analytics/Assignment - MidTerm&#39;</span><span class="p">)</span>
-data<span class="o">=</span>read.csv<span class="p">(</span><span class="s">&quot;HighNote Data Midterm.csv&quot;</span><span class="p">,</span>na.strings<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="s">&quot;NA&quot;</span><span class="p">))</span>
-<span class="kp">print</span><span class="p">(</span><span class="s">&#39;Dimension of data is&#39;</span><span class="p">)</span>
-<span class="kp">print</span><span class="p">(</span><span class="kp">paste</span><span class="p">(</span><span class="s">&#39;Row Count:&#39;</span><span class="p">,</span><span class="kp">dim</span><span class="p">(</span>data<span class="p">)[</span><span class="m">1</span><span class="p">]))</span>
-<span class="kp">print</span><span class="p">(</span><span class="kp">paste</span><span class="p">(</span><span class="s">&#39;Column Count:&#39;</span><span class="p">,</span><span class="kp">dim</span><span class="p">(</span>data<span class="p">)[</span><span class="m">2</span><span class="p">]))</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">getwd</span><span class="p">()</span>
+<span class="nf">setwd</span><span class="p">(</span><span class="s">&#39;C:/Users/Nijanth Anand/Downloads/BANA277-Customer Analytics/Assignment - MidTerm&#39;</span><span class="p">)</span>
+<span class="n">data</span><span class="o">=</span><span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;HighNote Data Midterm.csv&quot;</span><span class="p">,</span><span class="n">na.strings</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="s">&quot; &quot;</span><span class="p">,</span><span class="s">&quot;NA&quot;</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="s">&#39;Dimension of data is&#39;</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&#39;Row Count:&#39;</span><span class="p">,</span><span class="nf">dim</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="n">[1]</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&#39;Column Count:&#39;</span><span class="p">,</span><span class="nf">dim</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="n">[2]</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -13257,7 +13383,7 @@ data<span class="o">=</span>read.csv<span class="p">(</span><span class="s">&quo
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="kp">sum</span><span class="p">(</span><span class="kp">is.na</span><span class="p">(</span>data<span class="p">))</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">sum</span><span class="p">(</span><span class="nf">is.na</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -13297,14 +13423,14 @@ data<span class="o">=</span>read.csv<span class="p">(</span><span class="s">&quo
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>xyz<span class="o">&lt;-</span> data<span class="p">[</span>data<span class="o">$</span>adopter<span class="o">==</span><span class="m">1</span><span class="p">,</span><span class="kt">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">8</span><span class="p">,</span><span class="m">9</span><span class="p">,</span><span class="m">12</span><span class="p">,</span><span class="m">11</span><span class="p">,</span><span class="m">13</span><span class="p">,</span><span class="m">10</span><span class="p">,</span><span class="m">7</span><span class="p">)]</span> 
-a<span class="o">&lt;-</span>psych<span class="o">::</span>describe<span class="p">(</span>xyz<span class="p">,</span>skew<span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
-xyz<span class="o">&lt;-</span> data<span class="p">[</span>data<span class="o">$</span>adopter<span class="o">==</span><span class="m">0</span><span class="p">,</span><span class="kt">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">8</span><span class="p">,</span><span class="m">9</span><span class="p">,</span><span class="m">12</span><span class="p">,</span><span class="m">11</span><span class="p">,</span><span class="m">13</span><span class="p">,</span><span class="m">10</span><span class="p">,</span><span class="m">7</span><span class="p">)]</span> 
-b<span class="o">&lt;-</span>psych<span class="o">::</span>describe<span class="p">(</span>xyz<span class="p">,</span>skew<span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
-<span class="kp">print</span><span class="p">(</span><span class="s">&quot;For Adopter =1&quot;</span><span class="p">)</span>
-a
-<span class="kp">print</span><span class="p">(</span><span class="s">&quot;For Adopter =0&quot;</span><span class="p">)</span>
-b
+<div class=" highlight hl-r"><pre><span></span><span class="n">xyz</span><span class="o">&lt;-</span> <span class="n">data[data</span><span class="o">$</span><span class="n">adopter</span><span class="o">==</span><span class="m">1</span><span class="p">,</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">8</span><span class="p">,</span><span class="m">9</span><span class="p">,</span><span class="m">12</span><span class="p">,</span><span class="m">11</span><span class="p">,</span><span class="m">13</span><span class="p">,</span><span class="m">10</span><span class="p">,</span><span class="m">7</span><span class="p">)</span><span class="n">]</span> 
+<span class="n">a</span><span class="o">&lt;-</span><span class="n">psych</span><span class="o">::</span><span class="nf">describe</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span><span class="n">skew</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="n">xyz</span><span class="o">&lt;-</span> <span class="n">data[data</span><span class="o">$</span><span class="n">adopter</span><span class="o">==</span><span class="m">0</span><span class="p">,</span><span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="m">4</span><span class="p">,</span><span class="m">8</span><span class="p">,</span><span class="m">9</span><span class="p">,</span><span class="m">12</span><span class="p">,</span><span class="m">11</span><span class="p">,</span><span class="m">13</span><span class="p">,</span><span class="m">10</span><span class="p">,</span><span class="m">7</span><span class="p">)</span><span class="n">]</span> 
+<span class="n">b</span><span class="o">&lt;-</span><span class="n">psych</span><span class="o">::</span><span class="nf">describe</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span><span class="n">skew</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="s">&quot;For Adopter =1&quot;</span><span class="p">)</span>
+<span class="n">a</span>
+<span class="nf">print</span><span class="p">(</span><span class="s">&quot;For Adopter =0&quot;</span><span class="p">)</span>
+<span class="n">b</span>
 <span class="c1">#data[data$adopter==0,-1] %&gt;% psych::describe(,skew=FALSE,mat=TRUE)</span>
 </pre></div>
 
@@ -13417,7 +13543,7 @@ b
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>data<span class="o">$</span>ID<span class="o">&lt;-</span> <span class="kc">NULL</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">data</span><span class="o">$</span><span class="n">ID</span><span class="o">&lt;-</span> <span class="kc">NULL</span>
 </pre></div>
 
     </div>
@@ -13428,7 +13554,7 @@ b
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Question-2:-Descriptive-Statistics">Question 2: Descriptive Statistics<a class="anchor-link" href="#Question-2:-Descriptive-Statistics">&#182;</a></h1>
+<h1 id="Descriptive-Statistics">Descriptive Statistics<a class="anchor-link" href="#Descriptive-Statistics">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -13445,7 +13571,7 @@ b
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>data_desc<span class="o">&lt;-</span> data
+<div class=" highlight hl-r"><pre><span></span><span class="n">data_desc</span><span class="o">&lt;-</span> <span class="n">data</span>
 </pre></div>
 
     </div>
@@ -13466,8 +13592,8 @@ b
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>data_desc<span class="o">$</span>paid <span class="o">&lt;-</span> <span class="kp">ifelse</span><span class="p">(</span>data_desc<span class="o">$</span>adopter<span class="o">==</span><span class="m">1</span><span class="p">,</span><span class="s">&#39;Subscriber&#39;</span><span class="p">,</span><span class="s">&#39;Free User&#39;</span><span class="p">)</span>
-<span class="kp">table</span><span class="p">(</span>data_desc<span class="o">$</span>paid<span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">data_desc</span><span class="o">$</span><span class="n">paid</span> <span class="o">&lt;-</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">data_desc</span><span class="o">$</span><span class="n">adopter</span><span class="o">==</span><span class="m">1</span><span class="p">,</span><span class="s">&#39;Subscriber&#39;</span><span class="p">,</span><span class="s">&#39;Free User&#39;</span><span class="p">)</span>
+<span class="nf">table</span><span class="p">(</span><span class="n">data_desc</span><span class="o">$</span><span class="n">paid</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13509,7 +13635,7 @@ b
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>str<span class="p">(</span>data<span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13562,9 +13688,9 @@ b
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>cor_data<span class="o">&lt;-</span>data<span class="p">[,</span><span class="kt">c</span><span class="p">(</span><span class="s">&#39;age&#39;</span><span class="p">,</span><span class="s">&#39;male&#39;</span><span class="p">,</span><span class="s">&#39;good_country&#39;</span><span class="p">,</span><span class="s">&#39;friend_cnt&#39;</span><span class="p">,</span><span class="s">&#39;adopter&#39;</span><span class="p">)]</span>
-M<span class="o">=</span>cor<span class="p">(</span>cor_data<span class="p">,</span>method <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;pearson&quot;</span><span class="p">,</span> <span class="s">&quot;kendall&quot;</span><span class="p">,</span> <span class="s">&quot;spearman&quot;</span><span class="p">))</span>
-corrplot<span class="p">(</span>M<span class="p">,</span>method<span class="o">=</span><span class="s">&quot;number&quot;</span><span class="p">,</span>addrect<span class="o">=</span><span class="m">2</span><span class="p">)</span>  <span class="c1">##circle</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">cor_data</span><span class="o">&lt;-</span><span class="n">data[</span><span class="p">,</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;age&#39;</span><span class="p">,</span><span class="s">&#39;male&#39;</span><span class="p">,</span><span class="s">&#39;good_country&#39;</span><span class="p">,</span><span class="s">&#39;friend_cnt&#39;</span><span class="p">,</span><span class="s">&#39;adopter&#39;</span><span class="p">)</span><span class="n">]</span>
+<span class="n">M</span><span class="o">=</span><span class="nf">cor</span><span class="p">(</span><span class="n">cor_data</span><span class="p">,</span><span class="n">method</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;pearson&quot;</span><span class="p">,</span> <span class="s">&quot;kendall&quot;</span><span class="p">,</span> <span class="s">&quot;spearman&quot;</span><span class="p">))</span>
+<span class="nf">corrplot</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="s">&quot;number&quot;</span><span class="p">,</span><span class="n">addrect</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>  <span class="c1">##circle</span>
 </pre></div>
 
     </div>
@@ -13853,9 +13979,9 @@ TkSuQmCC"
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>cor_data<span class="o">&lt;-</span>data<span class="p">[,</span><span class="kt">c</span><span class="p">(</span><span class="s">&#39;friend_cnt&#39;</span><span class="p">,</span><span class="s">&#39;avg_friend_age&#39;</span><span class="p">,</span><span class="s">&#39;avg_friend_male&#39;</span><span class="p">,</span><span class="s">&#39;friend_country_cnt&#39;</span><span class="p">,</span><span class="s">&#39;subscriber_friend_cnt&#39;</span><span class="p">,</span><span class="s">&#39;adopter&#39;</span><span class="p">)]</span>
-M<span class="o">=</span>cor<span class="p">(</span>cor_data<span class="p">,</span>method <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;pearson&quot;</span><span class="p">,</span> <span class="s">&quot;kendall&quot;</span><span class="p">,</span> <span class="s">&quot;spearman&quot;</span><span class="p">))</span>
-corrplot<span class="p">(</span>M<span class="p">,</span>method<span class="o">=</span><span class="s">&quot;number&quot;</span><span class="p">,</span>addrect<span class="o">=</span><span class="m">2</span><span class="p">)</span>  <span class="c1">##circle</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">cor_data</span><span class="o">&lt;-</span><span class="n">data[</span><span class="p">,</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;friend_cnt&#39;</span><span class="p">,</span><span class="s">&#39;avg_friend_age&#39;</span><span class="p">,</span><span class="s">&#39;avg_friend_male&#39;</span><span class="p">,</span><span class="s">&#39;friend_country_cnt&#39;</span><span class="p">,</span><span class="s">&#39;subscriber_friend_cnt&#39;</span><span class="p">,</span><span class="s">&#39;adopter&#39;</span><span class="p">)</span><span class="n">]</span>
+<span class="n">M</span><span class="o">=</span><span class="nf">cor</span><span class="p">(</span><span class="n">cor_data</span><span class="p">,</span><span class="n">method</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;pearson&quot;</span><span class="p">,</span> <span class="s">&quot;kendall&quot;</span><span class="p">,</span> <span class="s">&quot;spearman&quot;</span><span class="p">))</span>
+<span class="nf">corrplot</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="s">&quot;number&quot;</span><span class="p">,</span><span class="n">addrect</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>  <span class="c1">##circle</span>
 </pre></div>
 
     </div>
@@ -14498,9 +14624,9 @@ RK5CYII="
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>cor_data<span class="o">&lt;-</span>data<span class="p">[,</span><span class="kt">c</span><span class="p">(</span><span class="s">&#39;songsListened&#39;</span><span class="p">,</span><span class="s">&#39;lovedTracks&#39;</span><span class="p">,</span><span class="s">&#39;posts&#39;</span><span class="p">,</span><span class="s">&#39;playlists&#39;</span><span class="p">,</span><span class="s">&#39;shouts&#39;</span><span class="p">,</span><span class="s">&#39;tenure&#39;</span><span class="p">,</span><span class="s">&#39;adopter&#39;</span><span class="p">)]</span>
-M<span class="o">=</span>cor<span class="p">(</span>cor_data<span class="p">,</span>method <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;pearson&quot;</span><span class="p">,</span> <span class="s">&quot;kendall&quot;</span><span class="p">,</span> <span class="s">&quot;spearman&quot;</span><span class="p">))</span>
-corrplot<span class="p">(</span>M<span class="p">,</span>method<span class="o">=</span><span class="s">&quot;number&quot;</span><span class="p">,</span>addrect<span class="o">=</span><span class="m">2</span><span class="p">)</span>  <span class="c1">##circle</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">cor_data</span><span class="o">&lt;-</span><span class="n">data[</span><span class="p">,</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;songsListened&#39;</span><span class="p">,</span><span class="s">&#39;lovedTracks&#39;</span><span class="p">,</span><span class="s">&#39;posts&#39;</span><span class="p">,</span><span class="s">&#39;playlists&#39;</span><span class="p">,</span><span class="s">&#39;shouts&#39;</span><span class="p">,</span><span class="s">&#39;tenure&#39;</span><span class="p">,</span><span class="s">&#39;adopter&#39;</span><span class="p">)</span><span class="n">]</span>
+<span class="n">M</span><span class="o">=</span><span class="nf">cor</span><span class="p">(</span><span class="n">cor_data</span><span class="p">,</span><span class="n">method</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;pearson&quot;</span><span class="p">,</span> <span class="s">&quot;kendall&quot;</span><span class="p">,</span> <span class="s">&quot;spearman&quot;</span><span class="p">))</span>
+<span class="nf">corrplot</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="s">&quot;number&quot;</span><span class="p">,</span><span class="n">addrect</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>  <span class="c1">##circle</span>
 </pre></div>
 
     </div>
@@ -15162,12 +15288,12 @@ AElFTkSuQmCC"
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>labs <span class="o">&lt;-</span> <span class="kp">paste</span><span class="p">(</span><span class="s">&quot;Country Type:&quot;</span><span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;Good&quot;</span><span class="p">,</span> <span class="s">&quot;Bad&quot;</span><span class="p">))</span>
-labs2 <span class="o">&lt;-</span> <span class="kp">paste</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;Paid User&quot;</span><span class="p">,</span> <span class="s">&quot;Free User&quot;</span><span class="p">))</span>
-data <span class="o">%&gt;%</span> mutate<span class="p">(</span>good_country <span class="o">=</span> <span class="kp">ifelse</span><span class="p">(</span>good_country <span class="o">==</span> <span class="m">1</span><span class="p">,</span> labs<span class="p">[</span><span class="m">1</span><span class="p">],</span> labs<span class="p">[</span><span class="m">2</span><span class="p">]))</span><span class="o">%&gt;%</span>
-  mutate<span class="p">(</span>adopter <span class="o">=</span> <span class="kp">ifelse</span><span class="p">(</span>adopter <span class="o">==</span> <span class="m">1</span><span class="p">,</span> labs2<span class="p">[</span><span class="m">1</span><span class="p">],</span> labs2<span class="p">[</span><span class="m">2</span><span class="p">]))</span><span class="o">%&gt;%</span>
-  ggplot<span class="p">(</span>aes<span class="p">(</span>x<span class="o">=</span>age<span class="p">,</span> y<span class="o">=</span>friend_cnt<span class="p">,</span>shape<span class="o">=</span>adopter<span class="p">,</span> color<span class="o">=</span>adopter<span class="p">))</span> <span class="o">+</span> geom_point<span class="p">(</span>size<span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="o">+</span>
-  facet_wrap<span class="p">(</span><span class="o">~</span>good_country<span class="p">)</span><span class="o">+</span>ylim<span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">2500</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">labs</span> <span class="o">&lt;-</span> <span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Country Type:&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;Good&quot;</span><span class="p">,</span> <span class="s">&quot;Bad&quot;</span><span class="p">))</span>
+<span class="n">labs2</span> <span class="o">&lt;-</span> <span class="nf">paste</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Paid User&quot;</span><span class="p">,</span> <span class="s">&quot;Free User&quot;</span><span class="p">))</span>
+<span class="n">data</span> <span class="o">%&gt;%</span> <span class="nf">mutate</span><span class="p">(</span><span class="n">good_country</span> <span class="o">=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">good_country</span> <span class="o">==</span> <span class="m">1</span><span class="p">,</span> <span class="n">labs[1]</span><span class="p">,</span> <span class="n">labs[2]</span><span class="p">))</span><span class="o">%&gt;%</span>
+  <span class="nf">mutate</span><span class="p">(</span><span class="n">adopter</span> <span class="o">=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">adopter</span> <span class="o">==</span> <span class="m">1</span><span class="p">,</span> <span class="n">labs2[1]</span><span class="p">,</span> <span class="n">labs2[2]</span><span class="p">))</span><span class="o">%&gt;%</span>
+  <span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">age</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">friend_cnt</span><span class="p">,</span><span class="n">shape</span><span class="o">=</span><span class="n">adopter</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">adopter</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_point</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="o">+</span>
+  <span class="nf">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">good_country</span><span class="p">)</span><span class="o">+</span><span class="nf">ylim</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">2500</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -15552,33 +15678,33 @@ IIJEUQARJIoC6P8BL+bX0/cExGUAAAAASUVORK5CYII="
 <div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>data_desc<span class="o">$</span>paid<span class="o">=</span><span class="kp">as.factor</span><span class="p">(</span>data_desc<span class="o">$</span>paid<span class="p">)</span>
-data_desc<span class="o">$</span>male<span class="o">=</span><span class="kp">as.factor</span><span class="p">(</span>data_desc<span class="o">$</span>male<span class="p">)</span>
-data_desc<span class="o">$</span>good_country<span class="o">=</span><span class="kp">as.factor</span><span class="p">(</span>data_desc<span class="o">$</span>good_country<span class="p">)</span>
-<span class="kp">print</span><span class="p">(</span><span class="s">&quot;Box Plot for Demographic understanding to help visualize how adopters and non-adopters perform&quot;</span><span class="p">)</span>
-<span class="kn">require</span><span class="p">(</span>gridExtra<span class="p">)</span>
-abc1 <span class="o">&lt;-</span> ggplot<span class="p">(</span>data_desc<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>paid<span class="p">,</span> y<span class="o">=</span>age<span class="p">))</span> <span class="o">+</span> geom_boxplot<span class="p">(</span>aes<span class="p">(</span>fill<span class="o">=</span>paid<span class="p">),</span>outlier.colour<span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> outlier.shape<span class="o">=</span><span class="m">8</span><span class="p">,</span>outlier.size<span class="o">=</span><span class="m">1</span><span class="p">)</span>
-abc1 <span class="o">&lt;-</span> abc1 <span class="o">+</span> scale_fill_manual<span class="p">(</span>values<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span> <span class="o">+</span>theme<span class="p">(</span>legend.position<span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span>theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_blank<span class="p">())</span>
-abc2<span class="o">&lt;-</span> ggplot<span class="p">(</span>data_desc<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>age<span class="p">))</span> <span class="o">+</span> geom_bar<span class="p">()</span>
-abc3<span class="o">&lt;-</span> ggplot<span class="p">(</span>data_desc<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>age<span class="p">))</span> <span class="o">+</span> geom_density<span class="p">(</span>kernel<span class="o">=</span><span class="s">&#39;gaussian&#39;</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">data_desc</span><span class="o">$</span><span class="n">paid</span><span class="o">=</span><span class="nf">as.factor</span><span class="p">(</span><span class="n">data_desc</span><span class="o">$</span><span class="n">paid</span><span class="p">)</span>
+<span class="n">data_desc</span><span class="o">$</span><span class="n">male</span><span class="o">=</span><span class="nf">as.factor</span><span class="p">(</span><span class="n">data_desc</span><span class="o">$</span><span class="n">male</span><span class="p">)</span>
+<span class="n">data_desc</span><span class="o">$</span><span class="n">good_country</span><span class="o">=</span><span class="nf">as.factor</span><span class="p">(</span><span class="n">data_desc</span><span class="o">$</span><span class="n">good_country</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="s">&quot;Box Plot for Demographic understanding to help visualize how adopters and non-adopters perform&quot;</span><span class="p">)</span>
+<span class="nf">require</span><span class="p">(</span><span class="n">gridExtra</span><span class="p">)</span>
+<span class="n">abc1</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data_desc</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">paid</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">age</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_boxplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">paid</span><span class="p">),</span><span class="n">outlier.colour</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">outlier.shape</span><span class="o">=</span><span class="m">8</span><span class="p">,</span><span class="n">outlier.size</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<span class="n">abc1</span> <span class="o">&lt;-</span> <span class="n">abc1</span> <span class="o">+</span> <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span> <span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">axis.title.x</span><span class="o">=</span><span class="nf">element_blank</span><span class="p">())</span>
+<span class="n">abc2</span><span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data_desc</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">age</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_bar</span><span class="p">()</span>
+<span class="n">abc3</span><span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data_desc</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">age</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_density</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s">&#39;gaussian&#39;</span><span class="p">)</span>
 
-data1<span class="o">&lt;-</span>data_desc<span class="p">[</span>data_desc<span class="o">$</span>male<span class="o">==</span><span class="m">0</span><span class="p">,]</span>
-abc4 <span class="o">&lt;-</span> ggplot<span class="p">(</span>data1<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>paid<span class="p">))</span> <span class="o">+</span>labs<span class="p">(</span>title <span class="o">=</span> <span class="s">&quot;Female Users&quot;</span><span class="p">)</span><span class="o">+</span> geom_bar<span class="p">(</span>aes<span class="p">(</span>fill<span class="o">=</span>paid<span class="p">)</span> <span class="p">)</span><span class="o">+</span>theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_blank<span class="p">())</span><span class="o">+</span> scale_fill_manual<span class="p">(</span>values<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span>theme<span class="p">(</span>legend.position<span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span>
-data2<span class="o">&lt;-</span>data_desc<span class="p">[</span>data_desc<span class="o">$</span>male<span class="o">==</span><span class="m">1</span><span class="p">,]</span>
-abc5 <span class="o">&lt;-</span> ggplot<span class="p">(</span>data2<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>paid<span class="p">))</span> <span class="o">+</span>labs<span class="p">(</span>title <span class="o">=</span> <span class="s">&quot;Male Users&quot;</span><span class="p">)</span><span class="o">+</span> geom_bar<span class="p">(</span>aes<span class="p">(</span>fill<span class="o">=</span>paid<span class="p">)</span> <span class="p">)</span><span class="o">+</span>theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_blank<span class="p">())</span><span class="o">+</span> scale_fill_manual<span class="p">(</span>values<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span>theme<span class="p">(</span>legend.position<span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span> <span class="c1">#geom_bar(stat=&quot;identity&quot;) #geom_histogram()</span>
-abc6 <span class="o">&lt;-</span> ggplot<span class="p">(</span>data_desc<span class="p">,</span> aes<span class="p">(</span>paid<span class="p">))</span>
-abc6 <span class="o">&lt;-</span> abc6  <span class="o">+</span> geom_bar<span class="p">(</span>aes<span class="p">(</span>fill <span class="o">=</span> male<span class="p">))</span><span class="o">+</span> scale_fill_manual<span class="p">(</span>values<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;#808080&quot;</span><span class="p">,</span> <span class="s">&quot;#FFD700&quot;</span><span class="p">))</span><span class="o">+</span>theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_blank<span class="p">())</span>
+<span class="n">data1</span><span class="o">&lt;-</span><span class="n">data_desc[data_desc</span><span class="o">$</span><span class="n">male</span><span class="o">==</span><span class="m">0</span><span class="p">,</span><span class="n">]</span>
+<span class="n">abc4</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">paid</span><span class="p">))</span> <span class="o">+</span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s">&quot;Female Users&quot;</span><span class="p">)</span><span class="o">+</span> <span class="nf">geom_bar</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">paid</span><span class="p">)</span> <span class="p">)</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">axis.title.x</span><span class="o">=</span><span class="nf">element_blank</span><span class="p">())</span><span class="o">+</span> <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span>
+<span class="n">data2</span><span class="o">&lt;-</span><span class="n">data_desc[data_desc</span><span class="o">$</span><span class="n">male</span><span class="o">==</span><span class="m">1</span><span class="p">,</span><span class="n">]</span>
+<span class="n">abc5</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data2</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">paid</span><span class="p">))</span> <span class="o">+</span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s">&quot;Male Users&quot;</span><span class="p">)</span><span class="o">+</span> <span class="nf">geom_bar</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">paid</span><span class="p">)</span> <span class="p">)</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">axis.title.x</span><span class="o">=</span><span class="nf">element_blank</span><span class="p">())</span><span class="o">+</span> <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span> <span class="c1">#geom_bar(stat=&quot;identity&quot;) #geom_histogram()</span>
+<span class="n">abc6</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data_desc</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">paid</span><span class="p">))</span>
+<span class="n">abc6</span> <span class="o">&lt;-</span> <span class="n">abc6</span>  <span class="o">+</span> <span class="nf">geom_bar</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="n">male</span><span class="p">))</span><span class="o">+</span> <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#808080&quot;</span><span class="p">,</span> <span class="s">&quot;#FFD700&quot;</span><span class="p">))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">axis.title.x</span><span class="o">=</span><span class="nf">element_blank</span><span class="p">())</span>
 
 
-data1<span class="o">&lt;-</span>data_desc<span class="p">[</span>data_desc<span class="o">$</span>good_country<span class="o">==</span><span class="m">0</span><span class="p">,]</span>
-abc7 <span class="o">&lt;-</span> ggplot<span class="p">(</span>data1<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>paid<span class="p">))</span> <span class="o">+</span>labs<span class="p">(</span>title <span class="o">=</span> <span class="s">&quot;Bad Country Users&quot;</span><span class="p">)</span><span class="o">+</span> geom_bar<span class="p">(</span>aes<span class="p">(</span>fill<span class="o">=</span>paid<span class="p">)</span> <span class="p">)</span><span class="o">+</span>theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_blank<span class="p">())</span><span class="o">+</span> scale_fill_manual<span class="p">(</span>values<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span>theme<span class="p">(</span>legend.position<span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span>
-data2<span class="o">&lt;-</span>data_desc<span class="p">[</span>data_desc<span class="o">$</span>good_country<span class="o">==</span><span class="m">1</span><span class="p">,]</span>
-abc8 <span class="o">&lt;-</span> ggplot<span class="p">(</span>data2<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>paid<span class="p">))</span> <span class="o">+</span>labs<span class="p">(</span>title <span class="o">=</span> <span class="s">&quot;Good Country Users&quot;</span><span class="p">)</span><span class="o">+</span> geom_bar<span class="p">(</span>aes<span class="p">(</span>fill<span class="o">=</span>paid<span class="p">)</span> <span class="p">)</span> <span class="o">+</span>theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_blank<span class="p">())</span><span class="o">+</span> scale_fill_manual<span class="p">(</span>values<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span>theme<span class="p">(</span>legend.position<span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="c1">#geom_bar(stat=&quot;identity&quot;) #geom_histogram()</span>
-data_descx<span class="o">=</span>mutate<span class="p">(</span>data_desc<span class="p">,</span>country<span class="o">=</span>good_country<span class="p">)</span>
-abc9 <span class="o">&lt;-</span> ggplot<span class="p">(</span>data_descx<span class="p">,</span> aes<span class="p">(</span>paid<span class="p">))</span>
-abc9 <span class="o">&lt;-</span> abc9  <span class="o">+</span> geom_bar<span class="p">(</span>aes<span class="p">(</span>fill <span class="o">=</span> country<span class="p">))</span><span class="o">+</span> scale_fill_manual<span class="p">(</span>values<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;#808080&quot;</span><span class="p">,</span> <span class="s">&quot;#FFD700&quot;</span><span class="p">))</span><span class="o">+</span>theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_blank<span class="p">())</span>
+<span class="n">data1</span><span class="o">&lt;-</span><span class="n">data_desc[data_desc</span><span class="o">$</span><span class="n">good_country</span><span class="o">==</span><span class="m">0</span><span class="p">,</span><span class="n">]</span>
+<span class="n">abc7</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">paid</span><span class="p">))</span> <span class="o">+</span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s">&quot;Bad Country Users&quot;</span><span class="p">)</span><span class="o">+</span> <span class="nf">geom_bar</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">paid</span><span class="p">)</span> <span class="p">)</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">axis.title.x</span><span class="o">=</span><span class="nf">element_blank</span><span class="p">())</span><span class="o">+</span> <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span>
+<span class="n">data2</span><span class="o">&lt;-</span><span class="n">data_desc[data_desc</span><span class="o">$</span><span class="n">good_country</span><span class="o">==</span><span class="m">1</span><span class="p">,</span><span class="n">]</span>
+<span class="n">abc8</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data2</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">paid</span><span class="p">))</span> <span class="o">+</span><span class="nf">labs</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s">&quot;Good Country Users&quot;</span><span class="p">)</span><span class="o">+</span> <span class="nf">geom_bar</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">paid</span><span class="p">)</span> <span class="p">)</span> <span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">axis.title.x</span><span class="o">=</span><span class="nf">element_blank</span><span class="p">())</span><span class="o">+</span> <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="c1">#geom_bar(stat=&quot;identity&quot;) #geom_histogram()</span>
+<span class="n">data_descx</span><span class="o">=</span><span class="nf">mutate</span><span class="p">(</span><span class="n">data_desc</span><span class="p">,</span><span class="n">country</span><span class="o">=</span><span class="n">good_country</span><span class="p">)</span>
+<span class="n">abc9</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data_descx</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">paid</span><span class="p">))</span>
+<span class="n">abc9</span> <span class="o">&lt;-</span> <span class="n">abc9</span>  <span class="o">+</span> <span class="nf">geom_bar</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="n">country</span><span class="p">))</span><span class="o">+</span> <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#808080&quot;</span><span class="p">,</span> <span class="s">&quot;#FFD700&quot;</span><span class="p">))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">axis.title.x</span><span class="o">=</span><span class="nf">element_blank</span><span class="p">())</span>
 
-grid.arrange<span class="p">(</span>abc1<span class="p">,</span>abc2<span class="p">,</span>abc3<span class="p">,</span>abc4<span class="p">,</span>abc5<span class="p">,</span>abc6<span class="p">,</span>abc7<span class="p">,</span>abc8<span class="p">,</span>abc9<span class="p">,</span> ncol<span class="o">=</span><span class="m">3</span><span class="p">)</span>
+<span class="nf">grid.arrange</span><span class="p">(</span><span class="n">abc1</span><span class="p">,</span><span class="n">abc2</span><span class="p">,</span><span class="n">abc3</span><span class="p">,</span><span class="n">abc4</span><span class="p">,</span><span class="n">abc5</span><span class="p">,</span><span class="n">abc6</span><span class="p">,</span><span class="n">abc7</span><span class="p">,</span><span class="n">abc8</span><span class="p">,</span><span class="n">abc9</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -15918,12 +16044,12 @@ bF+4NUQ4LgAAAABJRU5ErkJggg=="
 <div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>labs <span class="o">&lt;-</span> <span class="kp">paste</span><span class="p">(</span><span class="s">&quot;Gender:&quot;</span><span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;Male&quot;</span><span class="p">,</span> <span class="s">&quot;Female&quot;</span><span class="p">))</span>
-labs2 <span class="o">&lt;-</span> <span class="kp">paste</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;Paid User&quot;</span><span class="p">,</span> <span class="s">&quot;Free User&quot;</span><span class="p">))</span>
-data <span class="o">%&gt;%</span> mutate<span class="p">(</span>male <span class="o">=</span> <span class="kp">ifelse</span><span class="p">(</span>male <span class="o">==</span> <span class="m">1</span><span class="p">,</span> labs<span class="p">[</span><span class="m">1</span><span class="p">],</span> labs<span class="p">[</span><span class="m">2</span><span class="p">]))</span><span class="o">%&gt;%</span>
-  mutate<span class="p">(</span>adopter <span class="o">=</span> <span class="kp">ifelse</span><span class="p">(</span>adopter <span class="o">==</span> <span class="m">1</span><span class="p">,</span> labs2<span class="p">[</span><span class="m">1</span><span class="p">],</span> labs2<span class="p">[</span><span class="m">2</span><span class="p">]))</span><span class="o">%&gt;%</span>
-  ggplot<span class="p">(</span>aes<span class="p">(</span>x<span class="o">=</span>friend_cnt<span class="p">,</span> y<span class="o">=</span>subscriber_friend_cnt<span class="p">,</span>shape<span class="o">=</span>male<span class="p">,</span> color<span class="o">=</span>male<span class="p">))</span> <span class="o">+</span> geom_point<span class="p">(</span>size<span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="o">+</span>
-  facet_wrap<span class="p">(</span><span class="o">~</span>adopter<span class="p">)</span><span class="o">+</span>ylim<span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">100</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">labs</span> <span class="o">&lt;-</span> <span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Gender:&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;Male&quot;</span><span class="p">,</span> <span class="s">&quot;Female&quot;</span><span class="p">))</span>
+<span class="n">labs2</span> <span class="o">&lt;-</span> <span class="nf">paste</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Paid User&quot;</span><span class="p">,</span> <span class="s">&quot;Free User&quot;</span><span class="p">))</span>
+<span class="n">data</span> <span class="o">%&gt;%</span> <span class="nf">mutate</span><span class="p">(</span><span class="n">male</span> <span class="o">=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">male</span> <span class="o">==</span> <span class="m">1</span><span class="p">,</span> <span class="n">labs[1]</span><span class="p">,</span> <span class="n">labs[2]</span><span class="p">))</span><span class="o">%&gt;%</span>
+  <span class="nf">mutate</span><span class="p">(</span><span class="n">adopter</span> <span class="o">=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">adopter</span> <span class="o">==</span> <span class="m">1</span><span class="p">,</span> <span class="n">labs2[1]</span><span class="p">,</span> <span class="n">labs2[2]</span><span class="p">))</span><span class="o">%&gt;%</span>
+  <span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">friend_cnt</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">subscriber_friend_cnt</span><span class="p">,</span><span class="n">shape</span><span class="o">=</span><span class="n">male</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">male</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_point</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="o">+</span>
+  <span class="nf">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">adopter</span><span class="p">)</span><span class="o">+</span><span class="nf">ylim</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">100</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -16262,18 +16388,18 @@ UgYJJEnKIIEkSRkkkCQpgwSSJGWQQJKkDBJIkpRB/w9GlxfyfGI3VQAAAABJRU5ErkJggg=="
 <div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="kp">print</span><span class="p">(</span><span class="s">&quot;Box Plot for Peer Influence understanding to help visualize how adopters and non-adopters perform&quot;</span><span class="p">)</span>
-abc2 <span class="o">&lt;-</span> ggplot<span class="p">(</span>data_desc<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>paid<span class="p">,</span> y<span class="o">=</span>friend_cnt<span class="p">))</span> <span class="o">+</span> geom_boxplot<span class="p">(</span>aes<span class="p">(</span>fill<span class="o">=</span>paid<span class="p">),</span>outlier.colour<span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> outlier.shape<span class="o">=</span><span class="m">8</span><span class="p">,</span>outlier.size<span class="o">=</span><span class="m">1</span><span class="p">)</span>
-abc2 <span class="o">&lt;-</span> abc2 <span class="o">+</span> scale_fill_manual<span class="p">(</span>values<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span>theme<span class="p">(</span>legend.position<span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span>scale_y_continuous<span class="p">(</span>limits <span class="o">=</span> quantile<span class="p">(</span>data_desc<span class="o">$</span>friend_cnt<span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span><span class="o">+</span>theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_blank<span class="p">())</span>
-abc3 <span class="o">&lt;-</span> ggplot<span class="p">(</span>data_desc<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>paid<span class="p">,</span> y<span class="o">=</span>avg_friend_age<span class="p">))</span> <span class="o">+</span> geom_boxplot<span class="p">(</span>aes<span class="p">(</span>fill<span class="o">=</span>paid<span class="p">),</span>outlier.colour<span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> outlier.shape<span class="o">=</span><span class="m">8</span><span class="p">,</span>outlier.size<span class="o">=</span><span class="m">1</span><span class="p">)</span>
-abc3 <span class="o">&lt;-</span> abc3 <span class="o">+</span> scale_fill_manual<span class="p">(</span>values<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span>theme<span class="p">(</span>legend.position<span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span>scale_y_continuous<span class="p">(</span>limits <span class="o">=</span> quantile<span class="p">(</span>data_desc<span class="o">$</span>avg_friend_age<span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span><span class="o">+</span>theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_blank<span class="p">())</span>
-abc4 <span class="o">&lt;-</span> ggplot<span class="p">(</span>data_desc<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>paid<span class="p">,</span> y<span class="o">=</span>avg_friend_male<span class="p">))</span> <span class="o">+</span> geom_boxplot<span class="p">(</span>aes<span class="p">(</span>fill<span class="o">=</span>paid<span class="p">),</span>outlier.colour<span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> outlier.shape<span class="o">=</span><span class="m">8</span><span class="p">,</span>outlier.size<span class="o">=</span><span class="m">1</span><span class="p">)</span>
-abc4 <span class="o">&lt;-</span> abc4 <span class="o">+</span> scale_fill_manual<span class="p">(</span>values<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span>theme<span class="p">(</span>legend.position<span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span>scale_y_continuous<span class="p">(</span>limits <span class="o">=</span> quantile<span class="p">(</span>data_desc<span class="o">$</span>avg_friend_male<span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span><span class="o">+</span>theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_blank<span class="p">())</span>
-abc5 <span class="o">&lt;-</span> ggplot<span class="p">(</span>data_desc<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>paid<span class="p">,</span> y<span class="o">=</span>friend_country_cnt<span class="p">))</span> <span class="o">+</span> geom_boxplot<span class="p">(</span>aes<span class="p">(</span>fill<span class="o">=</span>paid<span class="p">),</span>outlier.colour<span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> outlier.shape<span class="o">=</span><span class="m">8</span><span class="p">,</span>outlier.size<span class="o">=</span><span class="m">1</span><span class="p">)</span>
-abc5 <span class="o">&lt;-</span> abc5 <span class="o">+</span> scale_fill_manual<span class="p">(</span>values<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span>theme<span class="p">(</span>legend.position<span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span>scale_y_continuous<span class="p">(</span>limits <span class="o">=</span> quantile<span class="p">(</span>data_desc<span class="o">$</span>friend_country_cnt<span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span><span class="o">+</span>theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_blank<span class="p">())</span>
-abc6 <span class="o">&lt;-</span> ggplot<span class="p">(</span>data_desc<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>paid<span class="p">,</span> y<span class="o">=</span>subscriber_friend_cnt<span class="p">))</span> <span class="o">+</span> geom_boxplot<span class="p">(</span>aes<span class="p">(</span>fill<span class="o">=</span>paid<span class="p">),</span>outlier.colour<span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> outlier.shape<span class="o">=</span><span class="m">8</span><span class="p">,</span>outlier.size<span class="o">=</span><span class="m">1</span><span class="p">)</span>
-abc6 <span class="o">&lt;-</span> abc6 <span class="o">+</span> scale_fill_manual<span class="p">(</span>values<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span>theme<span class="p">(</span>legend.position<span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span>scale_y_continuous<span class="p">(</span>limits <span class="o">=</span> quantile<span class="p">(</span>data_desc<span class="o">$</span>subscriber_friend_cnt<span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span><span class="o">+</span>theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_blank<span class="p">())</span>
-grid.arrange<span class="p">(</span>abc2<span class="p">,</span>abc3<span class="p">,</span>abc4<span class="p">,</span>abc5<span class="p">,</span>abc6<span class="p">,</span> ncol<span class="o">=</span><span class="m">3</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="s">&quot;Box Plot for Peer Influence understanding to help visualize how adopters and non-adopters perform&quot;</span><span class="p">)</span>
+<span class="n">abc2</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data_desc</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">paid</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">friend_cnt</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_boxplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">paid</span><span class="p">),</span><span class="n">outlier.colour</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">outlier.shape</span><span class="o">=</span><span class="m">8</span><span class="p">,</span><span class="n">outlier.size</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<span class="n">abc2</span> <span class="o">&lt;-</span> <span class="n">abc2</span> <span class="o">+</span> <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span><span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">limits</span> <span class="o">=</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">data_desc</span><span class="o">$</span><span class="n">friend_cnt</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">axis.title.x</span><span class="o">=</span><span class="nf">element_blank</span><span class="p">())</span>
+<span class="n">abc3</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data_desc</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">paid</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">avg_friend_age</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_boxplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">paid</span><span class="p">),</span><span class="n">outlier.colour</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">outlier.shape</span><span class="o">=</span><span class="m">8</span><span class="p">,</span><span class="n">outlier.size</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<span class="n">abc3</span> <span class="o">&lt;-</span> <span class="n">abc3</span> <span class="o">+</span> <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span><span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">limits</span> <span class="o">=</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">data_desc</span><span class="o">$</span><span class="n">avg_friend_age</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">axis.title.x</span><span class="o">=</span><span class="nf">element_blank</span><span class="p">())</span>
+<span class="n">abc4</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data_desc</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">paid</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">avg_friend_male</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_boxplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">paid</span><span class="p">),</span><span class="n">outlier.colour</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">outlier.shape</span><span class="o">=</span><span class="m">8</span><span class="p">,</span><span class="n">outlier.size</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<span class="n">abc4</span> <span class="o">&lt;-</span> <span class="n">abc4</span> <span class="o">+</span> <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span><span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">limits</span> <span class="o">=</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">data_desc</span><span class="o">$</span><span class="n">avg_friend_male</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">axis.title.x</span><span class="o">=</span><span class="nf">element_blank</span><span class="p">())</span>
+<span class="n">abc5</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data_desc</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">paid</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">friend_country_cnt</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_boxplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">paid</span><span class="p">),</span><span class="n">outlier.colour</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">outlier.shape</span><span class="o">=</span><span class="m">8</span><span class="p">,</span><span class="n">outlier.size</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<span class="n">abc5</span> <span class="o">&lt;-</span> <span class="n">abc5</span> <span class="o">+</span> <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span><span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">limits</span> <span class="o">=</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">data_desc</span><span class="o">$</span><span class="n">friend_country_cnt</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">axis.title.x</span><span class="o">=</span><span class="nf">element_blank</span><span class="p">())</span>
+<span class="n">abc6</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data_desc</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">paid</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">subscriber_friend_cnt</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_boxplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">paid</span><span class="p">),</span><span class="n">outlier.colour</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">outlier.shape</span><span class="o">=</span><span class="m">8</span><span class="p">,</span><span class="n">outlier.size</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<span class="n">abc6</span> <span class="o">&lt;-</span> <span class="n">abc6</span> <span class="o">+</span> <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span><span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">limits</span> <span class="o">=</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">data_desc</span><span class="o">$</span><span class="n">subscriber_friend_cnt</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">axis.title.x</span><span class="o">=</span><span class="nf">element_blank</span><span class="p">())</span>
+<span class="nf">grid.arrange</span><span class="p">(</span><span class="n">abc2</span><span class="p">,</span><span class="n">abc3</span><span class="p">,</span><span class="n">abc4</span><span class="p">,</span><span class="n">abc5</span><span class="p">,</span><span class="n">abc6</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -16595,12 +16721,12 @@ wPzBAAAAAElFTkSuQmCC"
 <div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>labs <span class="o">&lt;-</span> <span class="kp">paste</span><span class="p">(</span><span class="s">&quot;Gender:&quot;</span><span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;Male&quot;</span><span class="p">,</span> <span class="s">&quot;Female&quot;</span><span class="p">))</span>
-labs2 <span class="o">&lt;-</span> <span class="kp">paste</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;Paid User&quot;</span><span class="p">,</span> <span class="s">&quot;Free User&quot;</span><span class="p">))</span>
-data <span class="o">%&gt;%</span> mutate<span class="p">(</span>male <span class="o">=</span> <span class="kp">ifelse</span><span class="p">(</span>male <span class="o">==</span> <span class="m">1</span><span class="p">,</span> labs<span class="p">[</span><span class="m">1</span><span class="p">],</span> labs<span class="p">[</span><span class="m">2</span><span class="p">]))</span><span class="o">%&gt;%</span>
-  mutate<span class="p">(</span>adopter <span class="o">=</span> <span class="kp">ifelse</span><span class="p">(</span>adopter <span class="o">==</span> <span class="m">1</span><span class="p">,</span> labs2<span class="p">[</span><span class="m">1</span><span class="p">],</span> labs2<span class="p">[</span><span class="m">2</span><span class="p">]))</span><span class="o">%&gt;%</span>
-  ggplot<span class="p">(</span>aes<span class="p">(</span>x<span class="o">=</span>songsListened<span class="p">,</span> y<span class="o">=</span>lovedTracks<span class="p">,</span>shape<span class="o">=</span>adopter<span class="p">,</span> color<span class="o">=</span>adopter<span class="p">))</span> <span class="o">+</span> geom_point<span class="p">(</span>size<span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="o">+</span>
-  facet_wrap<span class="p">(</span><span class="o">~</span>male<span class="p">)</span><span class="c1">#+ylim(0,100)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">labs</span> <span class="o">&lt;-</span> <span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Gender:&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;Male&quot;</span><span class="p">,</span> <span class="s">&quot;Female&quot;</span><span class="p">))</span>
+<span class="n">labs2</span> <span class="o">&lt;-</span> <span class="nf">paste</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Paid User&quot;</span><span class="p">,</span> <span class="s">&quot;Free User&quot;</span><span class="p">))</span>
+<span class="n">data</span> <span class="o">%&gt;%</span> <span class="nf">mutate</span><span class="p">(</span><span class="n">male</span> <span class="o">=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">male</span> <span class="o">==</span> <span class="m">1</span><span class="p">,</span> <span class="n">labs[1]</span><span class="p">,</span> <span class="n">labs[2]</span><span class="p">))</span><span class="o">%&gt;%</span>
+  <span class="nf">mutate</span><span class="p">(</span><span class="n">adopter</span> <span class="o">=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">adopter</span> <span class="o">==</span> <span class="m">1</span><span class="p">,</span> <span class="n">labs2[1]</span><span class="p">,</span> <span class="n">labs2[2]</span><span class="p">))</span><span class="o">%&gt;%</span>
+  <span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">songsListened</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">lovedTracks</span><span class="p">,</span><span class="n">shape</span><span class="o">=</span><span class="n">adopter</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">adopter</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_point</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="o">+</span>
+  <span class="nf">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">male</span><span class="p">)</span><span class="c1">#+ylim(0,100)</span>
 </pre></div>
 
     </div>
@@ -16975,12 +17101,12 @@ iaQogEgkRQFEIikKIBJJUQCRSIoCiERSFEAkkqIA8v9qOFV8lSvUJAAAAABJRU5ErkJggg=="
 <div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>labs <span class="o">&lt;-</span> <span class="kp">paste</span><span class="p">(</span><span class="s">&quot;Gender:&quot;</span><span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;Male&quot;</span><span class="p">,</span> <span class="s">&quot;Female&quot;</span><span class="p">))</span>
-labs2 <span class="o">&lt;-</span> <span class="kp">paste</span><span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;Paid User&quot;</span><span class="p">,</span> <span class="s">&quot;Free User&quot;</span><span class="p">))</span>
-data <span class="o">%&gt;%</span> mutate<span class="p">(</span>male <span class="o">=</span> <span class="kp">ifelse</span><span class="p">(</span>male <span class="o">==</span> <span class="m">1</span><span class="p">,</span> labs<span class="p">[</span><span class="m">1</span><span class="p">],</span> labs<span class="p">[</span><span class="m">2</span><span class="p">]))</span><span class="o">%&gt;%</span>
-  mutate<span class="p">(</span>adopter <span class="o">=</span> <span class="kp">ifelse</span><span class="p">(</span>adopter <span class="o">==</span> <span class="m">1</span><span class="p">,</span> labs2<span class="p">[</span><span class="m">1</span><span class="p">],</span> labs2<span class="p">[</span><span class="m">2</span><span class="p">]))</span><span class="o">%&gt;%</span>
-  ggplot<span class="p">(</span>aes<span class="p">(</span>x<span class="o">=</span>songsListened<span class="p">,</span> y<span class="o">=</span>playlists<span class="p">,</span>shape<span class="o">=</span>adopter<span class="p">,</span> color<span class="o">=</span>adopter<span class="p">))</span> <span class="o">+</span> geom_point<span class="p">(</span>size<span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="o">+</span>
-  facet_wrap<span class="p">(</span><span class="o">~</span>male<span class="p">)</span> <span class="c1">#+ylim(0,150)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">labs</span> <span class="o">&lt;-</span> <span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Gender:&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;Male&quot;</span><span class="p">,</span> <span class="s">&quot;Female&quot;</span><span class="p">))</span>
+<span class="n">labs2</span> <span class="o">&lt;-</span> <span class="nf">paste</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;Paid User&quot;</span><span class="p">,</span> <span class="s">&quot;Free User&quot;</span><span class="p">))</span>
+<span class="n">data</span> <span class="o">%&gt;%</span> <span class="nf">mutate</span><span class="p">(</span><span class="n">male</span> <span class="o">=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">male</span> <span class="o">==</span> <span class="m">1</span><span class="p">,</span> <span class="n">labs[1]</span><span class="p">,</span> <span class="n">labs[2]</span><span class="p">))</span><span class="o">%&gt;%</span>
+  <span class="nf">mutate</span><span class="p">(</span><span class="n">adopter</span> <span class="o">=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">adopter</span> <span class="o">==</span> <span class="m">1</span><span class="p">,</span> <span class="n">labs2[1]</span><span class="p">,</span> <span class="n">labs2[2]</span><span class="p">))</span><span class="o">%&gt;%</span>
+  <span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">songsListened</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">playlists</span><span class="p">,</span><span class="n">shape</span><span class="o">=</span><span class="n">adopter</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">adopter</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_point</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">2</span><span class="p">)</span><span class="o">+</span>
+  <span class="nf">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">male</span><span class="p">)</span> <span class="c1">#+ylim(0,150)</span>
 </pre></div>
 
     </div>
@@ -17281,20 +17407,20 @@ CAkIIhESEEQiJCCIREhAEImQgPw/pYHwWEPZ9ckAAAAASUVORK5CYII="
 <div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="kp">print</span><span class="p">(</span><span class="s">&quot;Box Plot for User Engagement Influence understanding to help visualize how adopters and non-adopters perform&quot;</span><span class="p">)</span>
-abc7 <span class="o">&lt;-</span> ggplot<span class="p">(</span>data_desc<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>paid<span class="p">,</span> y<span class="o">=</span>songsListened<span class="p">))</span> <span class="o">+</span> geom_boxplot<span class="p">(</span>aes<span class="p">(</span>fill<span class="o">=</span>paid<span class="p">),</span>outlier.colour<span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> outlier.shape<span class="o">=</span><span class="m">8</span><span class="p">,</span>outlier.size<span class="o">=</span><span class="m">1</span><span class="p">)</span>
-abc7 <span class="o">&lt;-</span> abc7 <span class="o">+</span> scale_fill_manual<span class="p">(</span>values<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span>theme<span class="p">(</span>legend.position<span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span>scale_y_continuous<span class="p">(</span>limits <span class="o">=</span> quantile<span class="p">(</span>data_desc<span class="o">$</span>songsListened<span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span><span class="o">+</span>theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_blank<span class="p">())</span>
-abc8 <span class="o">&lt;-</span> ggplot<span class="p">(</span>data_desc<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>paid<span class="p">,</span> y<span class="o">=</span>lovedTracks<span class="p">))</span> <span class="o">+</span> geom_boxplot<span class="p">(</span>aes<span class="p">(</span>fill<span class="o">=</span>paid<span class="p">),</span>outlier.colour<span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> outlier.shape<span class="o">=</span><span class="m">8</span><span class="p">,</span>outlier.size<span class="o">=</span><span class="m">1</span><span class="p">)</span>
-abc8 <span class="o">&lt;-</span> abc8 <span class="o">+</span> scale_fill_manual<span class="p">(</span>values<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span>theme<span class="p">(</span>legend.position<span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span>scale_y_continuous<span class="p">(</span>limits <span class="o">=</span> quantile<span class="p">(</span>data_desc<span class="o">$</span>lovedTracks<span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span><span class="o">+</span>theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_blank<span class="p">())</span>
-abc9 <span class="o">&lt;-</span> ggplot<span class="p">(</span>data_desc<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>paid<span class="p">,</span> y<span class="o">=</span>posts<span class="p">))</span> <span class="o">+</span> geom_boxplot<span class="p">(</span>aes<span class="p">(</span>fill<span class="o">=</span>paid<span class="p">),</span>outlier.colour<span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> outlier.shape<span class="o">=</span><span class="m">8</span><span class="p">,</span>outlier.size<span class="o">=</span><span class="m">1</span><span class="p">)</span>
-abc9 <span class="o">&lt;-</span> abc9 <span class="o">+</span> scale_fill_manual<span class="p">(</span>values<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span>theme<span class="p">(</span>legend.position<span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span>scale_y_continuous<span class="p">(</span>limits <span class="o">=</span> quantile<span class="p">(</span>data_desc<span class="o">$</span>posts<span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span><span class="o">+</span>theme<span class="p">(</span>axis.title.x<span class="o">=</span>element_blank<span class="p">())</span>
-abc10 <span class="o">&lt;-</span> ggplot<span class="p">(</span>data_desc<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>paid<span class="p">,</span> y<span class="o">=</span>playlists<span class="p">))</span> <span class="o">+</span> geom_boxplot<span class="p">(</span>aes<span class="p">(</span>fill<span class="o">=</span>paid<span class="p">),</span>outlier.colour<span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> outlier.shape<span class="o">=</span><span class="m">8</span><span class="p">,</span>outlier.size<span class="o">=</span><span class="m">1</span><span class="p">)</span>
-abc10 <span class="o">&lt;-</span> abc10 <span class="o">+</span> scale_fill_manual<span class="p">(</span>values<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span>theme<span class="p">(</span>legend.position<span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span>scale_y_continuous<span class="p">(</span>limits <span class="o">=</span> quantile<span class="p">(</span>data_desc<span class="o">$</span>playlists<span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0.95</span><span class="p">)))</span>
-abc11 <span class="o">&lt;-</span> ggplot<span class="p">(</span>data_desc<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>paid<span class="p">,</span> y<span class="o">=</span>shouts<span class="p">))</span> <span class="o">+</span> geom_boxplot<span class="p">(</span>aes<span class="p">(</span>fill<span class="o">=</span>paid<span class="p">),</span>outlier.colour<span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> outlier.shape<span class="o">=</span><span class="m">8</span><span class="p">,</span>outlier.size<span class="o">=</span><span class="m">1</span><span class="p">)</span>
-abc11 <span class="o">&lt;-</span> abc11 <span class="o">+</span> scale_fill_manual<span class="p">(</span>values<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span>theme<span class="p">(</span>legend.position<span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span>scale_y_continuous<span class="p">(</span>limits <span class="o">=</span> quantile<span class="p">(</span>data_desc<span class="o">$</span>shouts<span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span>
-abc12 <span class="o">&lt;-</span> ggplot<span class="p">(</span>data_desc<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>paid<span class="p">,</span> y<span class="o">=</span>tenure<span class="p">))</span> <span class="o">+</span> geom_boxplot<span class="p">(</span>aes<span class="p">(</span>fill<span class="o">=</span>paid<span class="p">),</span>outlier.colour<span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> outlier.shape<span class="o">=</span><span class="m">8</span><span class="p">,</span>outlier.size<span class="o">=</span><span class="m">1</span><span class="p">)</span>
-abc12 <span class="o">&lt;-</span> abc12 <span class="o">+</span> scale_fill_manual<span class="p">(</span>values<span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span>theme<span class="p">(</span>legend.position<span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span>scale_y_continuous<span class="p">(</span>limits <span class="o">=</span> quantile<span class="p">(</span>data_desc<span class="o">$</span>tenure<span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span>
-grid.arrange<span class="p">(</span>abc7<span class="p">,</span>abc8<span class="p">,</span>abc9<span class="p">,</span>abc10<span class="p">,</span>abc11<span class="p">,</span>abc12<span class="p">,</span> ncol<span class="o">=</span><span class="m">3</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="s">&quot;Box Plot for User Engagement Influence understanding to help visualize how adopters and non-adopters perform&quot;</span><span class="p">)</span>
+<span class="n">abc7</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data_desc</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">paid</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">songsListened</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_boxplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">paid</span><span class="p">),</span><span class="n">outlier.colour</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">outlier.shape</span><span class="o">=</span><span class="m">8</span><span class="p">,</span><span class="n">outlier.size</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<span class="n">abc7</span> <span class="o">&lt;-</span> <span class="n">abc7</span> <span class="o">+</span> <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span><span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">limits</span> <span class="o">=</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">data_desc</span><span class="o">$</span><span class="n">songsListened</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">axis.title.x</span><span class="o">=</span><span class="nf">element_blank</span><span class="p">())</span>
+<span class="n">abc8</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data_desc</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">paid</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">lovedTracks</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_boxplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">paid</span><span class="p">),</span><span class="n">outlier.colour</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">outlier.shape</span><span class="o">=</span><span class="m">8</span><span class="p">,</span><span class="n">outlier.size</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<span class="n">abc8</span> <span class="o">&lt;-</span> <span class="n">abc8</span> <span class="o">+</span> <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span><span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">limits</span> <span class="o">=</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">data_desc</span><span class="o">$</span><span class="n">lovedTracks</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">axis.title.x</span><span class="o">=</span><span class="nf">element_blank</span><span class="p">())</span>
+<span class="n">abc9</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data_desc</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">paid</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">posts</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_boxplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">paid</span><span class="p">),</span><span class="n">outlier.colour</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">outlier.shape</span><span class="o">=</span><span class="m">8</span><span class="p">,</span><span class="n">outlier.size</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<span class="n">abc9</span> <span class="o">&lt;-</span> <span class="n">abc9</span> <span class="o">+</span> <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span><span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">limits</span> <span class="o">=</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">data_desc</span><span class="o">$</span><span class="n">posts</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">axis.title.x</span><span class="o">=</span><span class="nf">element_blank</span><span class="p">())</span>
+<span class="n">abc10</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data_desc</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">paid</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">playlists</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_boxplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">paid</span><span class="p">),</span><span class="n">outlier.colour</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">outlier.shape</span><span class="o">=</span><span class="m">8</span><span class="p">,</span><span class="n">outlier.size</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<span class="n">abc10</span> <span class="o">&lt;-</span> <span class="n">abc10</span> <span class="o">+</span> <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span><span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">limits</span> <span class="o">=</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">data_desc</span><span class="o">$</span><span class="n">playlists</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0.95</span><span class="p">)))</span>
+<span class="n">abc11</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data_desc</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">paid</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">shouts</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_boxplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">paid</span><span class="p">),</span><span class="n">outlier.colour</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">outlier.shape</span><span class="o">=</span><span class="m">8</span><span class="p">,</span><span class="n">outlier.size</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<span class="n">abc11</span> <span class="o">&lt;-</span> <span class="n">abc11</span> <span class="o">+</span> <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span><span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">limits</span> <span class="o">=</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">data_desc</span><span class="o">$</span><span class="n">shouts</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span>
+<span class="n">abc12</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">data_desc</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">paid</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">tenure</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_boxplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">paid</span><span class="p">),</span><span class="n">outlier.colour</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">outlier.shape</span><span class="o">=</span><span class="m">8</span><span class="p">,</span><span class="n">outlier.size</span><span class="o">=</span><span class="m">1</span><span class="p">)</span>
+<span class="n">abc12</span> <span class="o">&lt;-</span> <span class="n">abc12</span> <span class="o">+</span> <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="s">&quot;#FF4500&quot;</span><span class="p">,</span> <span class="s">&quot;#32CD32&quot;</span><span class="p">))</span><span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span><span class="o">+</span><span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">limits</span> <span class="o">=</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">data_desc</span><span class="o">$</span><span class="n">tenure</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.1</span><span class="p">,</span> <span class="m">0.9</span><span class="p">)))</span>
+<span class="nf">grid.arrange</span><span class="p">(</span><span class="n">abc7</span><span class="p">,</span><span class="n">abc8</span><span class="p">,</span><span class="n">abc9</span><span class="p">,</span><span class="n">abc10</span><span class="p">,</span><span class="n">abc11</span><span class="p">,</span><span class="n">abc12</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -17633,7 +17759,7 @@ CFUQICFUQYCEUAUBEkIVBEgIVdD/A1qTSOF0yui9AAAAAElFTkSuQmCC"
 <div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>pairs<span class="p">(</span>data<span class="p">[,</span><span class="kt">c</span><span class="p">(</span><span class="m">8</span><span class="o">:</span><span class="m">12</span><span class="p">,</span><span class="m">14</span><span class="p">)])</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">pairs</span><span class="p">(</span><span class="n">data[</span><span class="p">,</span><span class="nf">c</span><span class="p">(</span><span class="m">8</span><span class="o">:</span><span class="m">12</span><span class="p">,</span><span class="m">14</span><span class="p">)</span><span class="n">]</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -18014,8 +18140,8 @@ AQADICQAYMB/lK/813dyrJAAAAAASUVORK5CYII="
 <div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>M<span class="o">=</span>cor<span class="p">(</span>data<span class="p">,</span>method <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;pearson&quot;</span><span class="p">,</span> <span class="s">&quot;kendall&quot;</span><span class="p">,</span> <span class="s">&quot;spearman&quot;</span><span class="p">))</span>
-corrplot<span class="p">(</span>M<span class="p">,</span>method<span class="o">=</span><span class="s">&quot;number&quot;</span><span class="p">,</span>addrect<span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">M</span><span class="o">=</span><span class="nf">cor</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">method</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;pearson&quot;</span><span class="p">,</span> <span class="s">&quot;kendall&quot;</span><span class="p">,</span> <span class="s">&quot;spearman&quot;</span><span class="p">))</span>
+<span class="nf">corrplot</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="s">&quot;number&quot;</span><span class="p">,</span><span class="n">addrect</span><span class="o">=</span><span class="m">2</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -19712,7 +19838,7 @@ AADQEAR2AAAADUFgBwAA0BAEdgAAAA1BYAcAANAQBHYAAAANQWAHAADQEAR2AAAADUFgBwAA
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Question-3">Question 3<a class="anchor-link" href="#Question-3">&#182;</a></h1>
+
 </div>
 </div>
 </div>
@@ -19729,9 +19855,9 @@ AADQEAR2AAAADUFgBwAA0BAEdgAAAA1BYAcAANAQBHYAAAANQWAHAADQEAR2AAAADUFgBwAA
 <div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>data <span class="o">&lt;-</span> mutate<span class="p">(</span>data<span class="p">,</span>treatment<span class="o">=</span><span class="kp">ifelse</span><span class="p">(</span>data<span class="o">$</span>subscriber_friend_cnt <span class="o">&gt;=</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">))</span>
-data <span class="o">%&gt;%</span>
-  group_by<span class="p">(</span>adopter<span class="p">)</span> <span class="o">%&gt;%</span> summarise<span class="p">(</span>mean_treatment <span class="o">=</span> <span class="kp">mean</span><span class="p">(</span>treatment<span class="p">),</span>users<span class="o">=</span>n<span class="p">())</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">data</span> <span class="o">&lt;-</span> <span class="nf">mutate</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">treatment</span><span class="o">=</span><span class="nf">ifelse</span><span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">subscriber_friend_cnt</span> <span class="o">&gt;=</span><span class="m">1</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">0</span><span class="p">))</span>
+<span class="n">data</span> <span class="o">%&gt;%</span>
+  <span class="nf">group_by</span><span class="p">(</span><span class="n">adopter</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="nf">summarise</span><span class="p">(</span><span class="n">mean_treatment</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">treatment</span><span class="p">),</span><span class="n">users</span><span class="o">=</span><span class="nf">n</span><span class="p">())</span>
 </pre></div>
 
     </div>
@@ -19778,7 +19904,7 @@ data <span class="o">%&gt;%</span>
 <div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="kp">with</span><span class="p">(</span>data<span class="p">,</span> t.test<span class="p">(</span>treatment <span class="o">~</span> adopter<span class="p">))</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">with</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nf">t.test</span><span class="p">(</span><span class="n">treatment</span> <span class="o">~</span> <span class="n">adopter</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -19830,9 +19956,9 @@ mean in group 0 mean in group 1
 <div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>data <span class="o">%&gt;%</span>
-  group_by<span class="p">(</span>treatment<span class="p">)</span> <span class="o">%&gt;%</span>
-  summarise_all<span class="p">(</span>funs<span class="p">(</span><span class="kp">mean</span><span class="p">(</span><span class="m">.</span><span class="p">,</span> na.rm <span class="o">=</span> <span class="bp">T</span><span class="p">)))</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">data</span> <span class="o">%&gt;%</span>
+  <span class="nf">group_by</span><span class="p">(</span><span class="n">treatment</span><span class="p">)</span> <span class="o">%&gt;%</span>
+  <span class="nf">summarise_all</span><span class="p">(</span><span class="nf">funs</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">.,</span> <span class="n">na.rm</span> <span class="o">=</span> <span class="bp">T</span><span class="p">)))</span>
 </pre></div>
 
     </div>
@@ -19880,10 +20006,10 @@ mean in group 0 mean in group 1
 <div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>labels <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;age&#39;</span><span class="p">,</span><span class="s">&#39;male&#39;</span><span class="p">,</span><span class="s">&#39;friend_cnt&#39;</span><span class="p">,</span><span class="s">&#39;avg_friend_age&#39;</span><span class="p">,</span><span class="s">&#39;avg_friend_male&#39;</span><span class="p">,</span><span class="s">&#39;friend_country_cnt&#39;</span><span class="p">,</span><span class="s">&#39;songsListened&#39;</span><span class="p">,</span><span class="s">&#39;lovedTracks&#39;</span><span class="p">,</span><span class="s">&#39;posts&#39;</span><span class="p">,</span><span class="s">&#39;playlists&#39;</span><span class="p">,</span><span class="s">&#39;shouts&#39;</span><span class="p">,</span><span class="s">&#39;tenure&#39;</span><span class="p">,</span><span class="s">&#39;good_country&#39;</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">labels</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#39;age&#39;</span><span class="p">,</span><span class="s">&#39;male&#39;</span><span class="p">,</span><span class="s">&#39;friend_cnt&#39;</span><span class="p">,</span><span class="s">&#39;avg_friend_age&#39;</span><span class="p">,</span><span class="s">&#39;avg_friend_male&#39;</span><span class="p">,</span><span class="s">&#39;friend_country_cnt&#39;</span><span class="p">,</span><span class="s">&#39;songsListened&#39;</span><span class="p">,</span><span class="s">&#39;lovedTracks&#39;</span><span class="p">,</span><span class="s">&#39;posts&#39;</span><span class="p">,</span><span class="s">&#39;playlists&#39;</span><span class="p">,</span><span class="s">&#39;shouts&#39;</span><span class="p">,</span><span class="s">&#39;tenure&#39;</span><span class="p">,</span><span class="s">&#39;good_country&#39;</span><span class="p">)</span>
 
-<span class="kp">lapply</span><span class="p">(</span><span class="kp">labels</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span>v<span class="p">)</span> <span class="p">{</span>
-  t.test<span class="p">(</span>data<span class="p">[,</span> v<span class="p">]</span> <span class="o">~</span> data<span class="o">$</span>treatment<span class="p">)</span>
+<span class="nf">lapply</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nf">t.test</span><span class="p">(</span><span class="n">data[</span><span class="p">,</span> <span class="n">v]</span> <span class="o">~</span> <span class="n">data</span><span class="o">$</span><span class="n">treatment</span><span class="p">)</span>
  <span class="p">})</span>
 </pre></div>
 
@@ -20123,9 +20249,9 @@ mean in group 0 mean in group 1
 <div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>model_pse <span class="o">&lt;-</span> glm<span class="p">(</span>treatment <span class="o">~</span>  age<span class="o">+</span>male<span class="o">+</span>friend_cnt<span class="o">+</span>avg_friend_age<span class="o">+</span>avg_friend_male<span class="o">+</span>friend_country_cnt<span class="o">+</span>songsListened<span class="o">+</span>lovedTracks<span class="o">+</span>posts<span class="o">+</span>playlists<span class="o">+</span>shouts<span class="o">+</span>tenure<span class="o">+</span>good_country<span class="p">,</span>
-            family <span class="o">=</span> binomial<span class="p">(),</span> data <span class="o">=</span> data<span class="p">)</span>
-<span class="kp">summary</span><span class="p">(</span>model_pse<span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">model_pse</span> <span class="o">&lt;-</span> <span class="nf">glm</span><span class="p">(</span><span class="n">treatment</span> <span class="o">~</span>  <span class="n">age</span><span class="o">+</span><span class="n">male</span><span class="o">+</span><span class="n">friend_cnt</span><span class="o">+</span><span class="n">avg_friend_age</span><span class="o">+</span><span class="n">avg_friend_male</span><span class="o">+</span><span class="n">friend_country_cnt</span><span class="o">+</span><span class="n">songsListened</span><span class="o">+</span><span class="n">lovedTracks</span><span class="o">+</span><span class="n">posts</span><span class="o">+</span><span class="n">playlists</span><span class="o">+</span><span class="n">shouts</span><span class="o">+</span><span class="n">tenure</span><span class="o">+</span><span class="n">good_country</span><span class="p">,</span>
+            <span class="n">family</span> <span class="o">=</span> <span class="nf">binomial</span><span class="p">(),</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">model_pse</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -20206,7 +20332,7 @@ Number of Fisher Scoring iterations: 7
 <div class="prompt input_prompt">In&nbsp;[28]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>vif<span class="p">(</span>model_pse<span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">vif</span><span class="p">(</span><span class="n">model_pse</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -20274,8 +20400,8 @@ Number of Fisher Scoring iterations: 7
 <div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>propensity_score <span class="o">&lt;-</span> <span class="kt">data.frame</span><span class="p">(</span>pr_score <span class="o">=</span> predict<span class="p">(</span>model_pse<span class="p">,</span> type <span class="o">=</span> <span class="s">&quot;response&quot;</span><span class="p">),</span>
-                     treatment<span class="o">=</span>model_pse<span class="o">$</span>model<span class="o">$</span>treatment<span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">propensity_score</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">pr_score</span> <span class="o">=</span> <span class="nf">predict</span><span class="p">(</span><span class="n">model_pse</span><span class="p">,</span> <span class="n">type</span> <span class="o">=</span> <span class="s">&quot;response&quot;</span><span class="p">),</span>
+                     <span class="n">treatment</span><span class="o">=</span><span class="n">model_pse</span><span class="o">$</span><span class="n">model</span><span class="o">$</span><span class="n">treatment</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -20296,14 +20422,14 @@ Number of Fisher Scoring iterations: 7
 <div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>labs <span class="o">&lt;-</span> <span class="kp">paste</span><span class="p">(</span><span class="s">&quot;Treatment Type:&quot;</span><span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="s">&quot;0 Subscriber friends&quot;</span><span class="p">,</span> <span class="s">&quot;1 or more Subscriber friends&quot;</span><span class="p">))</span>
-propensity_score <span class="o">%&gt;%</span>
-  mutate<span class="p">(</span>treatment <span class="o">=</span> <span class="kp">ifelse</span><span class="p">(</span>treatment <span class="o">==</span> <span class="m">0</span><span class="p">,</span> labs<span class="p">[</span><span class="m">1</span><span class="p">],</span> labs<span class="p">[</span><span class="m">2</span><span class="p">]))</span> <span class="o">%&gt;%</span>
-  ggplot<span class="p">(</span>aes<span class="p">(</span>x <span class="o">=</span> pr_score<span class="p">))</span> <span class="o">+</span>
-  geom_histogram<span class="p">(</span>color <span class="o">=</span> <span class="s">&quot;white&quot;</span><span class="p">,</span>bins<span class="o">=</span><span class="m">55</span><span class="p">)</span> <span class="o">+</span>
-  facet_wrap<span class="p">(</span><span class="o">~</span>treatment<span class="p">)</span> <span class="o">+</span>
-  xlab<span class="p">(</span><span class="s">&quot;Probability of having subscriber friends&quot;</span><span class="p">)</span> <span class="o">+</span>
-  theme_bw<span class="p">()</span><span class="o">+</span>xlim<span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">1.01</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">labs</span> <span class="o">&lt;-</span> <span class="nf">paste</span><span class="p">(</span><span class="s">&quot;Treatment Type:&quot;</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;0 Subscriber friends&quot;</span><span class="p">,</span> <span class="s">&quot;1 or more Subscriber friends&quot;</span><span class="p">))</span>
+<span class="n">propensity_score</span> <span class="o">%&gt;%</span>
+  <span class="nf">mutate</span><span class="p">(</span><span class="n">treatment</span> <span class="o">=</span> <span class="nf">ifelse</span><span class="p">(</span><span class="n">treatment</span> <span class="o">==</span> <span class="m">0</span><span class="p">,</span> <span class="n">labs[1]</span><span class="p">,</span> <span class="n">labs[2]</span><span class="p">))</span> <span class="o">%&gt;%</span>
+  <span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">pr_score</span><span class="p">))</span> <span class="o">+</span>
+  <span class="nf">geom_histogram</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&quot;white&quot;</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="m">55</span><span class="p">)</span> <span class="o">+</span>
+  <span class="nf">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">treatment</span><span class="p">)</span> <span class="o">+</span>
+  <span class="nf">xlab</span><span class="p">(</span><span class="s">&quot;Probability of having subscriber friends&quot;</span><span class="p">)</span> <span class="o">+</span>
+  <span class="nf">theme_bw</span><span class="p">()</span><span class="o">+</span><span class="nf">xlim</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">1.01</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -20523,7 +20649,7 @@ MUyEARLDRBggMUyEARLDRJj/AR5HZfa8igNnAAAAAElFTkSuQmCC"
 <div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="kp">sum</span><span class="p">(</span><span class="kp">is.na</span><span class="p">(</span>data<span class="p">))</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">sum</span><span class="p">(</span><span class="nf">is.na</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -20563,9 +20689,9 @@ MUyEARLDRBggMUyEARLDRJj/AR5HZfa8igNnAAAAAElFTkSuQmCC"
 <div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>mod_match <span class="o">&lt;-</span> matchit<span class="p">(</span>treatment <span class="o">~</span> age<span class="o">+</span>male<span class="o">+</span>friend_cnt<span class="o">+</span>avg_friend_age<span class="o">+</span>avg_friend_male<span class="o">+</span>friend_country_cnt<span class="o">+</span>songsListened<span class="o">+</span>lovedTracks<span class="o">+</span>posts<span class="o">+</span>playlists<span class="o">+</span>shouts<span class="o">+</span>tenure<span class="o">+</span>good_country<span class="p">,</span>
-                     method <span class="o">=</span> <span class="s">&quot;nearest&quot;</span><span class="p">,</span> data <span class="o">=</span> data<span class="p">)</span>
-<span class="kp">summary</span><span class="p">(</span>mod_match<span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">mod_match</span> <span class="o">&lt;-</span> <span class="nf">matchit</span><span class="p">(</span><span class="n">treatment</span> <span class="o">~</span> <span class="n">age</span><span class="o">+</span><span class="n">male</span><span class="o">+</span><span class="n">friend_cnt</span><span class="o">+</span><span class="n">avg_friend_age</span><span class="o">+</span><span class="n">avg_friend_male</span><span class="o">+</span><span class="n">friend_country_cnt</span><span class="o">+</span><span class="n">songsListened</span><span class="o">+</span><span class="n">lovedTracks</span><span class="o">+</span><span class="n">posts</span><span class="o">+</span><span class="n">playlists</span><span class="o">+</span><span class="n">shouts</span><span class="o">+</span><span class="n">tenure</span><span class="o">+</span><span class="n">good_country</span><span class="p">,</span>
+                     <span class="n">method</span> <span class="o">=</span> <span class="s">&quot;nearest&quot;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">mod_match</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -20713,7 +20839,7 @@ Discarded       0       0
 <div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>plot<span class="p">(</span>mod_match<span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">plot</span><span class="p">(</span><span class="n">mod_match</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -22183,11 +22309,11 @@ AQKEBAgQEiBASIAAIQEC/wH4xKRMuFhVvQAAAABJRU5ErkJggg=="
 <div class="prompt input_prompt">In&nbsp;[36]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>dta_m <span class="o">&lt;-</span> match.data<span class="p">(</span>mod_match<span class="p">)</span>
-<span class="kp">print</span><span class="p">(</span><span class="s">&quot;Dimensions of the matched data frame&quot;</span><span class="p">)</span>
-<span class="kp">dim</span><span class="p">(</span>dta_m<span class="p">)</span>
-<span class="kp">print</span><span class="p">(</span><span class="s">&quot;Table of Treatment distriution in the matched data frame&quot;</span><span class="p">)</span>
-<span class="kp">table</span><span class="p">(</span>dta_m<span class="o">$</span>treatment<span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">dta_m</span> <span class="o">&lt;-</span> <span class="nf">match.data</span><span class="p">(</span><span class="n">mod_match</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="s">&quot;Dimensions of the matched data frame&quot;</span><span class="p">)</span>
+<span class="nf">dim</span><span class="p">(</span><span class="n">dta_m</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="s">&quot;Table of Treatment distriution in the matched data frame&quot;</span><span class="p">)</span>
+<span class="nf">table</span><span class="p">(</span><span class="n">dta_m</span><span class="o">$</span><span class="n">treatment</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -22268,11 +22394,11 @@ AQKEBAgQEiBASIAAIQEC/wH4xKRMuFhVvQAAAABJRU5ErkJggg=="
 <div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>dta_m<span class="o">$</span>treat <span class="o">&lt;-</span> <span class="kp">as.factor</span><span class="p">(</span>dta_m<span class="o">$</span>treatment<span class="p">)</span>
-abc2 <span class="o">&lt;-</span> ggplot<span class="p">(</span>dta_m<span class="p">,</span> aes<span class="p">(</span>y<span class="o">=</span>distance<span class="p">,</span>x<span class="o">=</span>treat<span class="p">))</span> <span class="o">+</span> geom_boxplot<span class="p">(</span>outlier.colour<span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> outlier.shape<span class="o">=</span><span class="m">8</span><span class="p">,</span>outlier.size<span class="o">=</span><span class="m">1</span><span class="p">)</span> 
-abc2 <span class="o">&lt;-</span> abc2 <span class="o">+</span>theme<span class="p">(</span>legend.position<span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span> 
-abc2
-dta_m<span class="o">$</span>treat <span class="o">&lt;-</span> <span class="kc">NULL</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">dta_m</span><span class="o">$</span><span class="n">treat</span> <span class="o">&lt;-</span> <span class="nf">as.factor</span><span class="p">(</span><span class="n">dta_m</span><span class="o">$</span><span class="n">treatment</span><span class="p">)</span>
+<span class="n">abc2</span> <span class="o">&lt;-</span> <span class="nf">ggplot</span><span class="p">(</span><span class="n">dta_m</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">distance</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="n">treat</span><span class="p">))</span> <span class="o">+</span> <span class="nf">geom_boxplot</span><span class="p">(</span><span class="n">outlier.colour</span><span class="o">=</span><span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="n">outlier.shape</span><span class="o">=</span><span class="m">8</span><span class="p">,</span><span class="n">outlier.size</span><span class="o">=</span><span class="m">1</span><span class="p">)</span> 
+<span class="n">abc2</span> <span class="o">&lt;-</span> <span class="n">abc2</span> <span class="o">+</span><span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span><span class="o">=</span><span class="s">&quot;none&quot;</span><span class="p">)</span> 
+<span class="n">abc2</span>
+<span class="n">dta_m</span><span class="o">$</span><span class="n">treat</span> <span class="o">&lt;-</span> <span class="kc">NULL</span>
 </pre></div>
 
     </div>
@@ -22437,33 +22563,33 @@ hAQF/g8icRQMUFHgIwAAAABJRU5ErkJggg=="
 <div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>fn_bal <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>dta<span class="p">,</span> variable<span class="p">)</span> <span class="p">{</span>
-  dta<span class="o">$</span>variable <span class="o">&lt;-</span> dta<span class="p">[,</span> variable<span class="p">]</span>
-  dta<span class="o">$</span>treatment <span class="o">&lt;-</span> <span class="kp">as.factor</span><span class="p">(</span>dta<span class="o">$</span>treatment<span class="p">)</span>
-  support <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="kp">min</span><span class="p">(</span>dta<span class="o">$</span>variable<span class="p">),</span> <span class="kp">max</span><span class="p">(</span>dta<span class="o">$</span>variable<span class="p">))</span>
-  ggplot<span class="p">(</span>dta<span class="p">,</span> aes<span class="p">(</span>x <span class="o">=</span> distance<span class="p">,</span> y <span class="o">=</span> variable<span class="p">,</span> color <span class="o">=</span> treatment<span class="p">))</span> <span class="o">+</span>
-    geom_point<span class="p">(</span>alpha <span class="o">=</span> <span class="m">0.2</span><span class="p">,</span> size <span class="o">=</span> <span class="m">1.3</span><span class="p">)</span> <span class="o">+</span>
-    geom_smooth<span class="p">(</span>method <span class="o">=</span> <span class="s">&quot;loess&quot;</span><span class="p">,</span> se <span class="o">=</span> <span class="bp">F</span><span class="p">)</span> <span class="o">+</span>
-    xlab<span class="p">(</span><span class="s">&quot;Propensity score&quot;</span><span class="p">)</span> <span class="o">+</span>
-    ylab<span class="p">(</span>variable<span class="p">)</span> <span class="o">+</span>
-    theme_bw<span class="p">()</span> <span class="o">+</span>
-    ylim<span class="p">(</span>support<span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">fn_bal</span> <span class="o">&lt;-</span> <span class="nf">function</span><span class="p">(</span><span class="n">dta</span><span class="p">,</span> <span class="n">variable</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">dta</span><span class="o">$</span><span class="n">variable</span> <span class="o">&lt;-</span> <span class="n">dta[</span><span class="p">,</span> <span class="n">variable]</span>
+  <span class="n">dta</span><span class="o">$</span><span class="n">treatment</span> <span class="o">&lt;-</span> <span class="nf">as.factor</span><span class="p">(</span><span class="n">dta</span><span class="o">$</span><span class="n">treatment</span><span class="p">)</span>
+  <span class="n">support</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="nf">min</span><span class="p">(</span><span class="n">dta</span><span class="o">$</span><span class="n">variable</span><span class="p">),</span> <span class="nf">max</span><span class="p">(</span><span class="n">dta</span><span class="o">$</span><span class="n">variable</span><span class="p">))</span>
+  <span class="nf">ggplot</span><span class="p">(</span><span class="n">dta</span><span class="p">,</span> <span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">distance</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">variable</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">treatment</span><span class="p">))</span> <span class="o">+</span>
+    <span class="nf">geom_point</span><span class="p">(</span><span class="n">alpha</span> <span class="o">=</span> <span class="m">0.2</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="m">1.3</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">geom_smooth</span><span class="p">(</span><span class="n">method</span> <span class="o">=</span> <span class="s">&quot;loess&quot;</span><span class="p">,</span> <span class="n">se</span> <span class="o">=</span> <span class="bp">F</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">xlab</span><span class="p">(</span><span class="s">&quot;Propensity score&quot;</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">ylab</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span> <span class="o">+</span>
+    <span class="nf">theme_bw</span><span class="p">()</span> <span class="o">+</span>
+    <span class="nf">ylim</span><span class="p">(</span><span class="n">support</span><span class="p">)</span>
 <span class="p">}</span>
 
-grid.arrange<span class="p">(</span>
-  fn_bal<span class="p">(</span>dta_m<span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">),</span>
-  fn_bal<span class="p">(</span>dta_m<span class="p">,</span> <span class="s">&quot;male&quot;</span><span class="p">)</span> <span class="o">+</span> theme<span class="p">(</span>legend.position <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">),</span>
-  fn_bal<span class="p">(</span>dta_m<span class="p">,</span> <span class="s">&quot;friend_cnt&quot;</span><span class="p">),</span>
-  fn_bal<span class="p">(</span>dta_m<span class="p">,</span> <span class="s">&quot;avg_friend_age&quot;</span><span class="p">)</span> <span class="o">+</span> theme<span class="p">(</span>legend.position <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">),</span>
-  fn_bal<span class="p">(</span>dta_m<span class="p">,</span> <span class="s">&quot;avg_friend_male&quot;</span><span class="p">),</span>
-  fn_bal<span class="p">(</span>dta_m<span class="p">,</span> <span class="s">&quot;songsListened&quot;</span><span class="p">)</span> <span class="o">+</span> theme<span class="p">(</span>legend.position <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">),</span>
-  fn_bal<span class="p">(</span>dta_m<span class="p">,</span> <span class="s">&quot;lovedTracks&quot;</span><span class="p">),</span>
-  fn_bal<span class="p">(</span>dta_m<span class="p">,</span> <span class="s">&quot;posts&quot;</span><span class="p">)</span> <span class="o">+</span> theme<span class="p">(</span>legend.position <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">),</span>
-  fn_bal<span class="p">(</span>dta_m<span class="p">,</span> <span class="s">&quot;playlists&quot;</span><span class="p">),</span>  
-  fn_bal<span class="p">(</span>dta_m<span class="p">,</span> <span class="s">&quot;shouts&quot;</span><span class="p">)</span> <span class="o">+</span> theme<span class="p">(</span>legend.position <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">),</span>
-  fn_bal<span class="p">(</span>dta_m<span class="p">,</span> <span class="s">&quot;tenure&quot;</span><span class="p">),</span>
-  fn_bal<span class="p">(</span>dta_m<span class="p">,</span> <span class="s">&quot;good_country&quot;</span><span class="p">)</span> <span class="o">+</span> theme<span class="p">(</span>legend.position <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">),</span>
-  nrow <span class="o">=</span> <span class="m">7</span><span class="p">)</span>
+<span class="nf">grid.arrange</span><span class="p">(</span>
+  <span class="nf">fn_bal</span><span class="p">(</span><span class="n">dta_m</span><span class="p">,</span> <span class="s">&quot;age&quot;</span><span class="p">),</span>
+  <span class="nf">fn_bal</span><span class="p">(</span><span class="n">dta_m</span><span class="p">,</span> <span class="s">&quot;male&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">),</span>
+  <span class="nf">fn_bal</span><span class="p">(</span><span class="n">dta_m</span><span class="p">,</span> <span class="s">&quot;friend_cnt&quot;</span><span class="p">),</span>
+  <span class="nf">fn_bal</span><span class="p">(</span><span class="n">dta_m</span><span class="p">,</span> <span class="s">&quot;avg_friend_age&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">),</span>
+  <span class="nf">fn_bal</span><span class="p">(</span><span class="n">dta_m</span><span class="p">,</span> <span class="s">&quot;avg_friend_male&quot;</span><span class="p">),</span>
+  <span class="nf">fn_bal</span><span class="p">(</span><span class="n">dta_m</span><span class="p">,</span> <span class="s">&quot;songsListened&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">),</span>
+  <span class="nf">fn_bal</span><span class="p">(</span><span class="n">dta_m</span><span class="p">,</span> <span class="s">&quot;lovedTracks&quot;</span><span class="p">),</span>
+  <span class="nf">fn_bal</span><span class="p">(</span><span class="n">dta_m</span><span class="p">,</span> <span class="s">&quot;posts&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">),</span>
+  <span class="nf">fn_bal</span><span class="p">(</span><span class="n">dta_m</span><span class="p">,</span> <span class="s">&quot;playlists&quot;</span><span class="p">),</span>  
+  <span class="nf">fn_bal</span><span class="p">(</span><span class="n">dta_m</span><span class="p">,</span> <span class="s">&quot;shouts&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">),</span>
+  <span class="nf">fn_bal</span><span class="p">(</span><span class="n">dta_m</span><span class="p">,</span> <span class="s">&quot;tenure&quot;</span><span class="p">),</span>
+  <span class="nf">fn_bal</span><span class="p">(</span><span class="n">dta_m</span><span class="p">,</span> <span class="s">&quot;good_country&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="nf">theme</span><span class="p">(</span><span class="n">legend.position</span> <span class="o">=</span> <span class="s">&quot;none&quot;</span><span class="p">),</span>
+  <span class="n">nrow</span> <span class="o">=</span> <span class="m">7</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -25786,8 +25912,8 @@ cAiCHQAAgEP8fz6t3xdkhlvgAAAAAElFTkSuQmCC"
 <div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>group_by<span class="p">(</span>dta_m<span class="p">,</span>treatment<span class="p">)</span> <span class="o">%&gt;%</span> 
-  summarise_all<span class="p">(</span>funs<span class="p">(</span><span class="kp">mean</span><span class="p">(</span><span class="m">.</span><span class="p">,</span> na.rm <span class="o">=</span> <span class="bp">T</span><span class="p">)))</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">group_by</span><span class="p">(</span><span class="n">dta_m</span><span class="p">,</span><span class="n">treatment</span><span class="p">)</span> <span class="o">%&gt;%</span> 
+  <span class="nf">summarise_all</span><span class="p">(</span><span class="nf">funs</span><span class="p">(</span><span class="nf">mean</span><span class="p">(</span><span class="n">.,</span> <span class="n">na.rm</span> <span class="o">=</span> <span class="bp">T</span><span class="p">)))</span>
 </pre></div>
 
     </div>
@@ -25834,10 +25960,10 @@ cAiCHQAAgEP8fz6t3xdkhlvgAAAAAElFTkSuQmCC"
 <div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>labels <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;age&#39;</span><span class="p">,</span><span class="s">&#39;male&#39;</span><span class="p">,</span><span class="s">&#39;friend_cnt&#39;</span><span class="p">,</span><span class="s">&#39;avg_friend_age&#39;</span><span class="p">,</span><span class="s">&#39;avg_friend_male&#39;</span><span class="p">,</span><span class="s">&#39;friend_country_cnt&#39;</span><span class="p">,</span><span class="s">&#39;songsListened&#39;</span><span class="p">,</span><span class="s">&#39;lovedTracks&#39;</span><span class="p">,</span><span class="s">&#39;posts&#39;</span><span class="p">,</span><span class="s">&#39;playlists&#39;</span><span class="p">,</span><span class="s">&#39;shouts&#39;</span><span class="p">,</span><span class="s">&#39;tenure&#39;</span><span class="p">,</span><span class="s">&#39;good_country&#39;</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">labels</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#39;age&#39;</span><span class="p">,</span><span class="s">&#39;male&#39;</span><span class="p">,</span><span class="s">&#39;friend_cnt&#39;</span><span class="p">,</span><span class="s">&#39;avg_friend_age&#39;</span><span class="p">,</span><span class="s">&#39;avg_friend_male&#39;</span><span class="p">,</span><span class="s">&#39;friend_country_cnt&#39;</span><span class="p">,</span><span class="s">&#39;songsListened&#39;</span><span class="p">,</span><span class="s">&#39;lovedTracks&#39;</span><span class="p">,</span><span class="s">&#39;posts&#39;</span><span class="p">,</span><span class="s">&#39;playlists&#39;</span><span class="p">,</span><span class="s">&#39;shouts&#39;</span><span class="p">,</span><span class="s">&#39;tenure&#39;</span><span class="p">,</span><span class="s">&#39;good_country&#39;</span><span class="p">)</span>
 
-<span class="kp">lapply</span><span class="p">(</span><span class="kp">labels</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span>v<span class="p">)</span> <span class="p">{</span>
-  t.test<span class="p">(</span>dta_m<span class="p">[,</span> v<span class="p">]</span> <span class="o">~</span> dta_m<span class="o">$</span>treatment<span class="p">)</span>
+<span class="nf">lapply</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="nf">function</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nf">t.test</span><span class="p">(</span><span class="n">dta_m[</span><span class="p">,</span> <span class="n">v]</span> <span class="o">~</span> <span class="n">dta_m</span><span class="o">$</span><span class="n">treatment</span><span class="p">)</span>
  <span class="p">})</span>
 </pre></div>
 
@@ -26060,7 +26186,7 @@ mean in group 0 mean in group 1
 <div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="kp">with</span><span class="p">(</span>dta_m<span class="p">,</span> t.test<span class="p">(</span>adopter<span class="o">~</span> treatment<span class="p">))</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">with</span><span class="p">(</span><span class="n">dta_m</span><span class="p">,</span> <span class="nf">t.test</span><span class="p">(</span><span class="n">adopter</span><span class="o">~</span> <span class="n">treatment</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -26102,7 +26228,7 @@ mean in group 0 mean in group 1
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Question-4">Question 4<a class="anchor-link" href="#Question-4">&#182;</a></h2>
+<h2 id="Machine-Learning">Machine Learning<a class="anchor-link" href="#Machine-Learning">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -26134,8 +26260,8 @@ mean in group 0 mean in group 1
 <div class="prompt input_prompt">In&nbsp;[53]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>glm_treat1 <span class="o">&lt;-</span> glm<span class="p">(</span>adopter <span class="o">~</span> treatment<span class="p">,</span> data <span class="o">=</span> dta_m<span class="p">,</span>family<span class="o">=</span><span class="s">&#39;binomial&#39;</span><span class="p">)</span>
-<span class="kp">summary</span><span class="p">(</span>glm_treat1<span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">glm_treat1</span> <span class="o">&lt;-</span> <span class="nf">glm</span><span class="p">(</span><span class="n">adopter</span> <span class="o">~</span> <span class="n">treatment</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">dta_m</span><span class="p">,</span><span class="n">family</span><span class="o">=</span><span class="s">&#39;binomial&#39;</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">glm_treat1</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -26190,7 +26316,7 @@ Number of Fisher Scoring iterations: 5
 <div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="kp">exp</span><span class="p">(</span>coef<span class="p">(</span>glm_treat1<span class="p">))</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">exp</span><span class="p">(</span><span class="nf">coef</span><span class="p">(</span><span class="n">glm_treat1</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -26251,8 +26377,8 @@ Number of Fisher Scoring iterations: 5
 <div class="prompt input_prompt">In&nbsp;[45]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>glm_treat2 <span class="o">&lt;-</span> glm<span class="p">(</span>adopter <span class="o">~</span> treatment<span class="o">+</span>age<span class="o">+</span>male<span class="o">+</span>friend_cnt<span class="o">+</span>avg_friend_age<span class="o">+</span>avg_friend_male<span class="o">+</span>friend_country_cnt<span class="o">+</span>songsListened<span class="o">+</span>lovedTracks<span class="o">+</span>posts<span class="o">+</span>playlists<span class="o">+</span>shouts<span class="o">+</span>tenure<span class="o">+</span>good_country<span class="o">+</span>treatment<span class="p">,</span> data <span class="o">=</span> dta_m<span class="p">,</span>family<span class="o">=</span><span class="s">&#39;binomial&#39;</span><span class="p">)</span>
-<span class="kp">summary</span><span class="p">(</span>glm_treat2<span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">glm_treat2</span> <span class="o">&lt;-</span> <span class="nf">glm</span><span class="p">(</span><span class="n">adopter</span> <span class="o">~</span> <span class="n">treatment</span><span class="o">+</span><span class="n">age</span><span class="o">+</span><span class="n">male</span><span class="o">+</span><span class="n">friend_cnt</span><span class="o">+</span><span class="n">avg_friend_age</span><span class="o">+</span><span class="n">avg_friend_male</span><span class="o">+</span><span class="n">friend_country_cnt</span><span class="o">+</span><span class="n">songsListened</span><span class="o">+</span><span class="n">lovedTracks</span><span class="o">+</span><span class="n">posts</span><span class="o">+</span><span class="n">playlists</span><span class="o">+</span><span class="n">shouts</span><span class="o">+</span><span class="n">tenure</span><span class="o">+</span><span class="n">good_country</span><span class="o">+</span><span class="n">treatment</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">dta_m</span><span class="p">,</span><span class="n">family</span><span class="o">=</span><span class="s">&#39;binomial&#39;</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">glm_treat2</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -26346,8 +26472,8 @@ Number of Fisher Scoring iterations: 5
 <div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>glm_treat3 <span class="o">&lt;-</span> glm<span class="p">(</span>adopter <span class="o">~</span> treatment<span class="o">+</span>age<span class="o">+</span>male<span class="o">+</span>avg_friend_age<span class="o">+</span>friend_country_cnt<span class="o">+</span>songsListened<span class="o">+</span>lovedTracks<span class="o">+</span>playlists<span class="o">+</span>tenure<span class="o">+</span>good_country<span class="p">,</span> data <span class="o">=</span> dta_m<span class="p">)</span>
-<span class="kp">summary</span><span class="p">(</span>glm_treat3<span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">glm_treat3</span> <span class="o">&lt;-</span> <span class="nf">glm</span><span class="p">(</span><span class="n">adopter</span> <span class="o">~</span> <span class="n">treatment</span><span class="o">+</span><span class="n">age</span><span class="o">+</span><span class="n">male</span><span class="o">+</span><span class="n">avg_friend_age</span><span class="o">+</span><span class="n">friend_country_cnt</span><span class="o">+</span><span class="n">songsListened</span><span class="o">+</span><span class="n">lovedTracks</span><span class="o">+</span><span class="n">playlists</span><span class="o">+</span><span class="n">tenure</span><span class="o">+</span><span class="n">good_country</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">dta_m</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">glm_treat3</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -26433,7 +26559,7 @@ Number of Fisher Scoring iterations: 2
 <div class="prompt input_prompt">In&nbsp;[48]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="kp">exp</span><span class="p">(</span>coef<span class="p">(</span>glm_treat3<span class="p">))</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">exp</span><span class="p">(</span><span class="nf">coef</span><span class="p">(</span><span class="n">glm_treat3</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -26504,8 +26630,8 @@ Number of Fisher Scoring iterations: 2
 <div class="prompt input_prompt">In&nbsp;[49]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span>glm_treat4 <span class="o">&lt;-</span> glm<span class="p">(</span>adopter <span class="o">~</span> treatment<span class="o">+</span>age<span class="o">+</span>male<span class="o">+</span>avg_friend_age<span class="o">+</span>friend_country_cnt<span class="o">+</span>songsListened<span class="o">+</span>lovedTracks<span class="o">+</span>playlists<span class="o">+</span>tenure<span class="o">+</span>good_country<span class="p">,</span> data <span class="o">=</span> data<span class="p">)</span>
-<span class="kp">summary</span><span class="p">(</span>glm_treat4<span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">glm_treat4</span> <span class="o">&lt;-</span> <span class="nf">glm</span><span class="p">(</span><span class="n">adopter</span> <span class="o">~</span> <span class="n">treatment</span><span class="o">+</span><span class="n">age</span><span class="o">+</span><span class="n">male</span><span class="o">+</span><span class="n">avg_friend_age</span><span class="o">+</span><span class="n">friend_country_cnt</span><span class="o">+</span><span class="n">songsListened</span><span class="o">+</span><span class="n">lovedTracks</span><span class="o">+</span><span class="n">playlists</span><span class="o">+</span><span class="n">tenure</span><span class="o">+</span><span class="n">good_country</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">)</span>
+<span class="nf">summary</span><span class="p">(</span><span class="n">glm_treat4</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -26591,7 +26717,7 @@ Number of Fisher Scoring iterations: 2
 <div class="prompt input_prompt">In&nbsp;[50]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-r"><pre><span></span><span class="kp">exp</span><span class="p">(</span>coef<span class="p">(</span>glm_treat4<span class="p">))</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">exp</span><span class="p">(</span><span class="nf">coef</span><span class="p">(</span><span class="n">glm_treat4</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -26662,7 +26788,7 @@ Number of Fisher Scoring iterations: 2
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Question-5">Question 5<a class="anchor-link" href="#Question-5">&#182;</a></h2>
+<h2 id="Business-Takeaways">Business Takeaways<a class="anchor-link" href="#Business-Takeaways">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -26679,12 +26805,74 @@ Number of Fisher Scoring iterations: 2
 
 </div>
 </div>
+</div></section></section>
 </div>
-    </div>
-  </div>
-</body>
+</div>
 
- 
+<script>
+
+require(
+    {
+      // it makes sense to wait a little bit when you are loading
+      // reveal from a cdn in a slow connection environment
+      waitSeconds: 15
+    },
+    [
+      "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/lib/js/head.min.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/js/reveal.js"
+    ],
+
+    function(head, Reveal){
+
+        // Full list of configuration options available here: https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+
+            transition: "slide",
+
+            // Optional libraries used to extend on reveal.js
+            dependencies: [
+                { src: "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/lib/js/classList.js",
+                  condition: function() { return !document.body.classList; } },
+                { src: "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.5.0/plugin/notes/notes.js",
+                  async: true,
+                  condition: function() { return !!document.body.classList; } }
+            ]
+        });
+
+        var update = function(event){
+          if(MathJax.Hub.getAllJax(Reveal.getCurrentSlide())){
+            MathJax.Hub.Rerender(Reveal.getCurrentSlide());
+          }
+        };
+
+        Reveal.addEventListener('slidechanged', update);
+
+        function setScrollingSlide() {
+            var scroll = false
+            if (scroll === true) {
+              var h = $('.reveal').height() * 0.95;
+              $('section.present').find('section')
+                .filter(function() {
+                  return $(this).height() > h;
+                })
+                .css('height', 'calc(95vh)')
+                .css('overflow-y', 'scroll')
+                .css('margin-top', '20px');
+            }
+        }
+
+        // check and set the scrolling slide every time the slide change
+        Reveal.addEventListener('slidechanged', setScrollingSlide);
+
+    }
+
+);
+</script>
+
+</body>
 
 
 </html>

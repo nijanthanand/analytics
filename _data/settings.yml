@@ -53,7 +53,6 @@ projects:
 - {name: 'Impact of Freemium Business Model', folder: 'proj-2', file: 'projects/proj-2.html'}
 - {name: 'Geo Fencing', folder: 'proj-3', file: 'projects/proj-3.html'}
 - {name: 'Apriori Alogirthms on Restaurant Cuisines', folder: 'proj-4', file: 'projects/proj-4.html'}
-- {name: 'Twitter Sentiment Analsyis', folder: 'proj-5', file: 'projects/proj-5.html'}
 
 #-------------------------------
 # Contact Section
